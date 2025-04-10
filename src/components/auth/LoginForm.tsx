@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -13,44 +13,27 @@ export const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // Simulate authentication delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Use the login function from auth context
+      await login(email, password);
       
-      // Mock validation
-      if (!email || !password) {
-        throw new Error("Please fill in all fields");
-      }
+      toast({
+        title: "Login Successful",
+        description: "Welcome to National Trade Fair!",
+        variant: "default",
+      });
       
-      if (email === "demo@example.com" && password === "password") {
-        // Store auth state
-        localStorage.setItem("isAuthenticated", "true");
-        localStorage.setItem("user", JSON.stringify({ 
-          email,
-          name: "Demo User",
-          role: "member"
-        }));
-        
-        toast({
-          title: "Login Successful",
-          description: "Welcome to National Trade Fair!",
-          variant: "default",
-        });
-        
-        // Redirect to home page after successful login
-        navigate("/");
-      } else {
-        throw new Error("Invalid credentials. Try demo@example.com / password");
-      }
+      // No need to set localStorage here as it's handled in the auth context
     } catch (error) {
       toast({
         title: "Login Failed",
-        description: error instanceof Error ? error.message : "An error occurred",
+        description: error instanceof Error ? error.message : "Invalid credentials. Try demo@example.com / password",
         variant: "destructive",
       });
     } finally {
