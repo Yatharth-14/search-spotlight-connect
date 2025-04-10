@@ -9,6 +9,8 @@ import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "./hooks/useAuth";
 import { useState } from "react";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const App = () => {
   // Create a client instance that persists across renders
@@ -24,6 +26,8 @@ const App = () => {
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

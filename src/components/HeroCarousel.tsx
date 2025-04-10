@@ -2,11 +2,39 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import { carouselImages } from "@/data/mockData";
+
+// Updated carousel images with different photos
+const carouselImages = [
+  {
+    id: 1,
+    url: "https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    title: "Discover Premium Products",
+    description: "Find high-quality products from verified suppliers across the globe",
+  },
+  {
+    id: 2,
+    url: "https://images.unsplash.com/photo-1612831197310-ff5cf7a211b6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    title: "Connect with Global Suppliers",
+    description: "Build relationships with trusted manufacturers and exporters",
+  },
+  {
+    id: 3,
+    url: "https://images.unsplash.com/photo-1677911034156-89ce48be5714?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    title: "Competitive Pricing",
+    description: "Get the best deals directly from manufacturers",
+  },
+  {
+    id: 4,
+    url: "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    title: "Secure Transactions",
+    description: "Trade with confidence using our secure payment methods",
+  },
+];
 
 export const HeroCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-
+  
+  // Automatic carousel sliding
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((current) => (current + 1) % carouselImages.length);

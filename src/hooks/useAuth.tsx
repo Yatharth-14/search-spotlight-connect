@@ -12,6 +12,7 @@ interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  register: (name: string, email: string, password: string) => Promise<void>;
 }
 
 const defaultContext: AuthContextType = {
@@ -19,6 +20,7 @@ const defaultContext: AuthContextType = {
   user: null,
   login: async () => {},
   logout: () => {},
+  register: async () => {},
 };
 
 const AuthContext = createContext<AuthContextType>(defaultContext);
@@ -39,23 +41,56 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    // This would normally call an API
-    // For demo, we'll simulate a successful login with mock data
-    if (email === "demo@example.com" && password === "password") {
-      const userData: User = {
-        email,
-        name: "Demo User",
-        role: "member",
-      };
-      
-      localStorage.setItem("isAuthenticated", "true");
-      localStorage.setItem("user", JSON.stringify(userData));
-      
-      setIsAuthenticated(true);
-      setUser(userData);
-    } else {
-      throw new Error("Invalid credentials");
+    // Check if user exists in localStorage
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const user = users.find((u: any) => u.email === email);
+    
+    if (!user) {
+      throw new Error("User not found. Please register first.");
     }
+    
+    if (user.password !== password) {
+      throw new Error("Invalid password");
+    }
+    
+    const userData: User = {
+      email: user.email,
+      name: user.name,
+      role: "member",
+    };
+    
+    localStorage.setItem("isAuthenticated", "true");
+    localStorage.setItem("user", JSON.stringify(userData));
+    
+    setIsAuthenticated(true);
+    setUser(userData);
+  };
+
+  const register = async (name: string, email: string, password: string) => {
+    // Check if email already exists
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    
+    if (users.some((user: any) => user.email === email)) {
+      throw new Error("Email already registered");
+    }
+    
+    // Add new user
+    const newUser = { name, email, password };
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
+    
+    // Auto login after registration
+    const userData: User = {
+      email,
+      name,
+      role: "member",
+    };
+    
+    localStorage.setItem("isAuthenticated", "true");
+    localStorage.setItem("user", JSON.stringify(userData));
+    
+    setIsAuthenticated(true);
+    setUser(userData);
   };
 
   const logout = () => {
@@ -67,7 +102,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

@@ -13,6 +13,7 @@ import { LoginModal } from "@/components/auth/LoginModal";
 import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "next-themes";
 import { Search, LogOut, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
@@ -63,12 +64,14 @@ const Index = () => {
                 </Button>
               </div>
             ) : (
-              <Button 
-                className="bg-primary" 
-                onClick={() => setLoginModalOpen(true)}
-              >
-                Login
-              </Button>
+              <div className="flex space-x-2">
+                <Link to="/login">
+                  <Button className="bg-primary">Login</Button>
+                </Link>
+                <Link to="/register">
+                  <Button variant="outline" className="dark:text-white">Register</Button>
+                </Link>
+              </div>
             )}
           </div>
         </div>
@@ -94,9 +97,6 @@ const Index = () => {
 
       {/* Footer */}
       <Footer />
-
-      {/* Login Modal */}
-      <LoginModal open={loginModalOpen} onOpenChange={setLoginModalOpen} />
     </div>
   );
 };
