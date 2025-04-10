@@ -2,24 +2,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-
-const carouselImages = [
-  { 
-    id: 1, 
-    url: "/lovable-uploads/5f8c5f76-30b4-4825-9833-b2ee160443dd.png", 
-    title: "Marketplace for Businesses" 
-  },
-  { 
-    id: 2, 
-    url: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80", 
-    title: "Connect with Suppliers" 
-  },
-  { 
-    id: 3, 
-    url: "https://images.unsplash.com/photo-1518770660439-4636190af475?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80", 
-    title: "Find the Best Deals" 
-  },
-];
+import { carouselImages } from "@/data/mockData";
 
 export const HeroCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -32,7 +15,7 @@ export const HeroCarousel = () => {
   }, []);
 
   return (
-    <section className="relative w-full bg-gray-100">
+    <section className="relative w-full bg-gray-100 dark:bg-gray-900">
       <Carousel className="w-full">
         <CarouselContent>
           {carouselImages.map((image, index) => (
@@ -44,11 +27,11 @@ export const HeroCarousel = () => {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-white p-4">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-2 text-center">
                     {image.title}
                   </h2>
                   <p className="text-lg md:text-xl mb-6 max-w-2xl text-center">
-                    Hero Section With Carousel of Images
+                    {image.description}
                   </p>
                   <Button className="bg-primary hover:bg-primary/90">Explore Now</Button>
                 </div>
