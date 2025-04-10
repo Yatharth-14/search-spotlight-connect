@@ -65,12 +65,14 @@ const Index = () => {
               </div>
             ) : (
               <div className="flex space-x-2">
-                <Link to="/login">
-                  <Button className="bg-primary">Login</Button>
-                </Link>
-                <Link to="/register">
-                  <Button variant="outline" className="dark:text-white">Register</Button>
-                </Link>
+                <div className="flex">
+                  <Link to="/login">
+                    <Button className="bg-primary rounded-r-none">Login</Button>
+                  </Link>
+                  <Link to="/register">
+                    <Button variant="outline" className="dark:text-white rounded-l-none border-l-0">Register</Button>
+                  </Link>
+                </div>
               </div>
             )}
           </div>
