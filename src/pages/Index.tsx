@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { HeroCarousel } from "@/components/HeroCarousel";
@@ -8,9 +9,16 @@ import { TopSellersSection } from "@/components/TopSellersSection";
 import { TestimonialSection } from "@/components/TestimonialSection";
 import { Footer } from "@/components/Footer";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Search } from "lucide-react";
+import { LoginModal } from "@/components/auth/LoginModal";
+import { useAuth } from "@/hooks/useAuth";
+import { useTheme } from "next-themes";
+import { Search, LogOut, User } from "lucide-react";
 
 const Index = () => {
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const { isAuthenticated, user, logout } = useAuth();
+  const { theme } = useTheme();
+
   return (
     <div className="min-h-screen flex flex-col dark:bg-gray-900">
       {/* Header Section */}
@@ -19,9 +27,9 @@ const Index = () => {
           <div className="flex items-center">
             <div className="flex items-center">
               <img 
-                src="/lovable-uploads/ddbed860-face-4c08-b988-544d11f67ee0.png" 
+                src="/lovable-uploads/c2c0e920-a554-4d65-8e05-10b2d47db13e.png" 
                 alt="National Trade Fair" 
-                className="h-10 md:h-12" 
+                className={`h-10 md:h-12 ${theme === 'dark' ? 'invert' : ''}`}
               />
             </div>
           </div>
@@ -38,7 +46,30 @@ const Index = () => {
               <Button variant="outline" size="sm" className="hidden lg:inline-flex dark:text-white dark:hover:bg-gray-700">Bid Now</Button>
             </div>
             <ThemeToggle />
-            <Button className="bg-primary">Login</Button>
+            
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-2">
+                <div className="hidden sm:block">
+                  <span className="text-sm dark:text-white">Welcome, {user?.name}</span>
+                </div>
+                <Button 
+                  variant="outline" 
+                  size="icon" 
+                  onClick={() => logout()} 
+                  className="dark:text-white"
+                  title="Logout"
+                >
+                  <LogOut className="h-4 w-4" />
+                </Button>
+              </div>
+            ) : (
+              <Button 
+                className="bg-primary" 
+                onClick={() => setLoginModalOpen(true)}
+              >
+                Login
+              </Button>
+            )}
           </div>
         </div>
       </header>
@@ -63,6 +94,9 @@ const Index = () => {
 
       {/* Footer */}
       <Footer />
+
+      {/* Login Modal */}
+      <LoginModal open={loginModalOpen} onOpenChange={setLoginModalOpen} />
     </div>
   );
 };
