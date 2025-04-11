@@ -36,15 +36,15 @@ const cards = [
 
 export const HeroCarousel = () => {
   return (
-    <div className="w-full py-10 px-6 ">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="w-full py-10 px-4 sm:px-6 lg:px-8 ">
+      <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         
         {/* Card 1: Big Featured Card (takes 2 cols and 2 rows) */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className={`lg:col-span-2 lg:row-span-2 rounded-xl h-[387px] p-8 shadow-xl text-white flex flex-col justify-between ${cards[0].bg}`}
+          className={`lg:col-span-2 lg:row-span-2 rounded-xl h-[387px] p-8 rounded-none shadow-xl text-white flex flex-col justify-between ${cards[0].bg}`}
         >
           <div>
             <h1 className="text-4xl font-bold mb-2">{cards[0].title}</h1>
@@ -66,7 +66,7 @@ export const HeroCarousel = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 * idx }}
-              className={`rounded-lg p-6 shadow-md text-center ${offer.bg}`}
+              className={`rounded-lg p-6 shadow-md text-center rounded-none ${offer.bg}`}
             >
               <h2 className="text-green-200 text-sm font-bold uppercase mb-1">
                 {offer.title}
@@ -90,7 +90,7 @@ export const HeroCarousel = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 * (idx + 2) }}
-              className={`rounded-lg p-6 shadow-md text-center ${offer.bg}`}
+              className={`rounded-lg p-6 shadow-md text-center rounded-none ${offer.bg}`}
             >
               <h2 className="text-green-200 text-sm font-bold uppercase mb-1">
                 {offer.title}

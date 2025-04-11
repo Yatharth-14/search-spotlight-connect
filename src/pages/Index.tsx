@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +8,7 @@ import { TopSellersSection } from "@/components/TopSellersSection";
 import { TestimonialSection } from "@/components/TestimonialSection";
 import { Footer } from "@/components/Footer";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { MovingBanner } from "@/components/MovingBanner";
 import { LoginModal } from "@/components/auth/LoginModal";
 import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "next-themes";
@@ -78,6 +78,9 @@ const Index = () => {
           </div>
         </div>
       </header>
+
+      {/* Moving Banner */}
+      <MovingBanner />
 
       {/* Main Content */}
       <main className="flex-1">
