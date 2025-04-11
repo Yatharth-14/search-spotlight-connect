@@ -13,6 +13,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   register: (name: string, email: string, password: string) => Promise<void>;
+  updateUser: (userData: Partial<User>) => void;
 }
 
 const defaultContext: AuthContextType = {
@@ -21,6 +22,7 @@ const defaultContext: AuthContextType = {
   login: async () => {},
   logout: () => {},
   register: async () => {},
+  updateUser: () => {},
 };
 
 const AuthContext = createContext<AuthContextType>(defaultContext);
@@ -93,6 +95,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(userData);
   };
 
+  const updateUser = (userData: Partial<User>) => {
+    if (!user) return;
+    
+    const updatedUser = {
+      ...user,
+      ...userData,
+    };
+    
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  };
+
   const logout = () => {
     localStorage.removeItem("isAuthenticated");
     localStorage.removeItem("user");
@@ -102,7 +116,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, register }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, register, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

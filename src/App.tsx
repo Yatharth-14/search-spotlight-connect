@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PostRequirement from "./pages/PostRequirement";
 import BidNow from "./pages/BidNow";
+import MyProfile from "./pages/MyProfile";
 
 const App = () => {
   // Create a client instance that persists across renders
@@ -32,6 +33,7 @@ const App = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/post-requirement" element={<PostRequirement />} />
                 <Route path="/bid-now" element={<BidNow />} />
+                <Route path="/my-profile" element={<MyProfile />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

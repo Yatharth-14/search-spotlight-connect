@@ -13,9 +13,15 @@ import { MovingBanner } from "@/components/MovingBanner";
 import { LoginModal } from "@/components/auth/LoginModal";
 import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "next-themes";
-import { Search, LogOut, User } from "lucide-react";
+import { Search, LogOut, User, ChevronDown } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Index = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
@@ -80,18 +86,29 @@ const Index = () => {
             
             {isAuthenticated ? (
               <div className="flex items-center space-x-2">
-                <div className="hidden sm:block">
-                  <span className="text-sm dark:text-white">Welcome, {user?.name}</span>
-                </div>
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  onClick={() => logout()} 
-                  className="dark:text-white"
-                  title="Logout"
-                >
-                  <LogOut className="h-4 w-4" />
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="flex items-center dark:text-white"
+                    >
+                      <User className="h-4 w-4 mr-1" />
+                      <span className="hidden sm:inline">{user?.name}</span>
+                      <ChevronDown className="h-4 w-4 ml-1" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="bg-white dark:bg-gray-800 w-48">
+                    <DropdownMenuItem onClick={() => navigate("/my-profile")}>
+                      <User className="h-4 w-4 mr-2" />
+                      <span>My Profile</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => logout()}>
+                      <LogOut className="h-4 w-4 mr-2" />
+                      <span>Logout</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             ) : (
               <div className="flex space-x-2">
