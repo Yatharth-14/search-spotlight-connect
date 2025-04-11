@@ -44,7 +44,7 @@ export const HeroCarousel = () => {
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className={`lg:col-span-2 lg:row-span-2 rounded-xl h-[387px] p-8 rounded-none shadow-xl text-white flex flex-col justify-between ${cards[0].bg}`}
+          className={`lg:col-span-2 lg:row-span-2 rounded-none h-[387px] p-8 rounded-none shadow-xl text-white flex flex-col justify-between ${cards[0].bg}`}
         >
           <div>
             <h1 className="text-4xl font-bold mb-2">{cards[0].title}</h1>
