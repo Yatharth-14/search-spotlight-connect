@@ -11,6 +11,8 @@ import { AuthProvider } from "./hooks/useAuth";
 import { useState } from "react";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import PostRequirement from "./pages/PostRequirement";
+import BidNow from "./pages/BidNow";
 
 const App = () => {
   // Create a client instance that persists across renders
@@ -28,6 +30,8 @@ const App = () => {
                 <Route path="/" element={<Index />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/post-requirement" element={<PostRequirement />} />
+                <Route path="/bid-now" element={<BidNow />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

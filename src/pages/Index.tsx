@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,12 +14,28 @@ import { LoginModal } from "@/components/auth/LoginModal";
 import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "next-themes";
 import { Search, LogOut, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
   const { theme } = useTheme();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleButtonClick = (path: string, action: string) => {
+    if (isAuthenticated) {
+      navigate(path);
+    } else {
+      toast({
+        title: "Authentication Required",
+        description: `You need to login to ${action}`,
+        variant: "destructive",
+      });
+      navigate("/login");
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col dark:bg-gray-900">
@@ -42,9 +59,22 @@ const Index = () => {
           
           <div className="flex items-center space-x-2">
             <div className="hidden sm:flex space-x-2">
-              <Button variant="outline" size="sm" className="dark:text-white dark:hover:bg-gray-700">Post Requirements</Button>
-              <Button variant="outline" size="sm" className="hidden lg:inline-flex dark:text-white dark:hover:bg-gray-700">Send Inquiry</Button>
-              <Button variant="outline" size="sm" className="hidden lg:inline-flex dark:text-white dark:hover:bg-gray-700">Bid Now</Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="dark:text-white dark:hover:bg-gray-700"
+                onClick={() => handleButtonClick("/post-requirement", "post requirements")}
+              >
+                Post Requirements
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="hidden lg:inline-flex dark:text-white dark:hover:bg-gray-700"
+                onClick={() => handleButtonClick("/bid-now", "place bids")}
+              >
+                Bid Now
+              </Button>
             </div>
             <ThemeToggle />
             

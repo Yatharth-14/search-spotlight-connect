@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 
-const dummyOffers = [
+// Default offers if nothing in localStorage
+const defaultOffers = [
   "🔥 Big Summer Sale — Up to 70% OFF!",
   "🚚 Free Shipping on Orders Above ₹499",
   "💳 Extra 10% Cashback on Credit Cards",
@@ -13,11 +15,23 @@ const dummyOffers = [
 export const MovingBanner = () => {
   const controls = useAnimation();
   const [isPaused, setIsPaused] = useState(false);
+  const [offers, setOffers] = useState(defaultOffers);
+
+  // Load offers from localStorage if available
+  useEffect(() => {
+    const storedBannerItems = localStorage.getItem("bannerItems");
+    if (storedBannerItems) {
+      const bannerItems = JSON.parse(storedBannerItems);
+      if (bannerItems.length > 0) {
+        setOffers(bannerItems);
+      }
+    }
+  }, []);
 
   // Start auto animation when component mounts
   useEffect(() => {
     startAnimation();
-  }, []);
+  }, [offers]);
 
   const startAnimation = () => {
     controls.start({
@@ -52,7 +66,7 @@ export const MovingBanner = () => {
         animate={controls}
         initial={{ x: "100%" }}
       >
-        {dummyOffers.map((offer, idx) => (
+        {offers.map((offer, idx) => (
           <span key={idx} className="px-4 uppercase tracking-wider">
             {offer}
           </span>
