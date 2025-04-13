@@ -25,6 +25,7 @@ import {
 
 const Index = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const { isAuthenticated, user, logout } = useAuth();
   const { theme } = useTheme();
   const navigate = useNavigate();
@@ -43,6 +44,13 @@ const Index = () => {
     }
   };
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col dark:bg-gray-900">
       {/* Header Section */}
@@ -58,10 +66,24 @@ const Index = () => {
             </div>
           </div>
           
-          <div className="hidden md:flex flex-1 max-w-md mx-4 relative">
-            <Input type="text" placeholder="Search products, suppliers..." className="w-full pl-10 dark:bg-gray-700 dark:text-white" />
+          <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-4 relative">
+            <Input 
+              type="text" 
+              placeholder="Search products, suppliers..." 
+              className="w-full pl-10 dark:bg-gray-700 dark:text-white"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
             <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-          </div>
+            <Button 
+              type="submit" 
+              size="sm" 
+              className="absolute right-1 top-1 h-8"
+              variant="ghost"
+            >
+              <Search className="h-4 w-4" />
+            </Button>
+          </form>
           
           <div className="flex items-center space-x-2">
             <div className="hidden sm:flex space-x-2">
@@ -123,6 +145,28 @@ const Index = () => {
               </div>
             )}
           </div>
+        </div>
+        
+        {/* Mobile Search */}
+        <div className="md:hidden px-4 pb-3">
+          <form onSubmit={handleSearch} className="relative">
+            <Input 
+              type="text" 
+              placeholder="Search products, suppliers..." 
+              className="w-full pl-10 dark:bg-gray-700 dark:text-white"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+            <Button 
+              type="submit" 
+              size="sm" 
+              className="absolute right-1 top-1 h-8"
+              variant="ghost"
+            >
+              <Search className="h-4 w-4" />
+            </Button>
+          </form>
         </div>
       </header>
 
