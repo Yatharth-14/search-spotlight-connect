@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,15 +35,17 @@ const Index = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Update suggestions as user types
+  // Update suggestions as user types - modified to show suggestions immediately
   useEffect(() => {
     if (searchQuery.trim() !== "") {
       const filtered = sellers.filter(
         seller => seller.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setSuggestions(filtered.slice(0, 5)); // Limit to 5 suggestions
+      setShowSuggestions(true); // Always show suggestions when there's input
     } else {
       setSuggestions([]);
+      setShowSuggestions(false);
     }
   }, [searchQuery]);
 
@@ -74,6 +75,13 @@ const Index = () => {
     navigate(`/seller/${sellerId}`);
   };
 
+  // Function to handle search input changes
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    // Suggestions will be shown/hidden by the useEffect
+  };
+
   return (
     <div className="min-h-screen flex flex-col dark:bg-gray-900">
       {/* Header Section */}
@@ -95,15 +103,8 @@ const Index = () => {
               placeholder="Search products, suppliers..." 
               className="w-full pl-10 dark:bg-gray-700 dark:text-white"
               value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setShowSuggestions(e.target.value.trim() !== "");
-              }}
-              onFocus={() => setShowSuggestions(searchQuery.trim() !== "")}
-              onBlur={() => {
-                // Delayed hiding to allow clicks on suggestions
-                setTimeout(() => setShowSuggestions(false), 200);
-              }}
+              onChange={handleSearchInputChange}
+              // Remove onFocus and onBlur handlers to keep showing suggestions while typing
             />
             <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
             <Button 
@@ -115,7 +116,7 @@ const Index = () => {
               <Search className="h-4 w-4" />
             </Button>
 
-            {/* Suggestions Dropdown */}
+            {/* Suggestions Dropdown - modified to always show when there's input */}
             {showSuggestions && suggestions.length > 0 && (
               <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-10 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
                 <ul className="py-1">
@@ -202,7 +203,7 @@ const Index = () => {
           </div>
         </div>
         
-        {/* Mobile Search */}
+        {/* Mobile Search - also update mobile search */}
         <div className="md:hidden px-4 pb-3">
           <form onSubmit={handleSearch} className="relative">
             <Input 
@@ -210,15 +211,8 @@ const Index = () => {
               placeholder="Search products, suppliers..." 
               className="w-full pl-10 dark:bg-gray-700 dark:text-white"
               value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setShowSuggestions(e.target.value.trim() !== "");
-              }}
-              onFocus={() => setShowSuggestions(searchQuery.trim() !== "")}
-              onBlur={() => {
-                // Delayed hiding to allow clicks on suggestions
-                setTimeout(() => setShowSuggestions(false), 200);
-              }}
+              onChange={handleSearchInputChange}
+              // Remove onFocus and onBlur handlers to keep showing suggestions while typing
             />
             <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
             <Button 
@@ -230,7 +224,7 @@ const Index = () => {
               <Search className="h-4 w-4" />
             </Button>
 
-            {/* Suggestions Dropdown for Mobile */}
+            {/* Suggestions Dropdown for Mobile - modified to always show when there's input */}
             {showSuggestions && suggestions.length > 0 && (
               <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-1 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
                 <ul className="py-1">

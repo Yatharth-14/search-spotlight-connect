@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -63,15 +62,17 @@ const SearchResults = () => {
     }
   }, [initialQuery]);
 
-  // Update suggestions as user types
+  // Update suggestions as user types - modified to show suggestions immediately
   useEffect(() => {
     if (searchQuery.trim() !== "") {
       const filtered = sellers.filter(
         seller => seller.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setSuggestions(filtered.slice(0, 5)); // Limit to 5 suggestions
+      setShowSuggestions(true); // Always show suggestions when there's input
     } else {
       setSuggestions([]);
+      setShowSuggestions(false);
     }
   }, [searchQuery]);
 
@@ -89,6 +90,13 @@ const SearchResults = () => {
   const handleSuggestionClick = (sellerId: number) => {
     setShowSuggestions(false);
     navigate(`/seller/${sellerId}`);
+  };
+
+  // Function to handle search input changes
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    // Suggestions will be shown/hidden by the useEffect
   };
 
   return (
@@ -120,15 +128,7 @@ const SearchResults = () => {
               placeholder="Search sellers, products..." 
               className="pl-10 pr-4 py-2 w-full dark:bg-gray-700 dark:text-white"
               value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setShowSuggestions(e.target.value.trim() !== "");
-              }}
-              onFocus={() => setShowSuggestions(searchQuery.trim() !== "")}
-              onBlur={() => {
-                // Delayed hiding to allow clicks on suggestions
-                setTimeout(() => setShowSuggestions(false), 200);
-              }}
+              onChange={handleSearchInputChange}
             />
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
             <Button 
@@ -138,7 +138,7 @@ const SearchResults = () => {
               Search
             </Button>
             
-            {/* Suggestions Dropdown */}
+            {/* Suggestions Dropdown - modified to always show when there's input */}
             {showSuggestions && suggestions.length > 0 && (
               <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-1 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
                 <ul className="py-1">

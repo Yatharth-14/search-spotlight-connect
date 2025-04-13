@@ -6,8 +6,8 @@ import { sellers } from "@/data/mockData";
 import { Link } from "react-router-dom";
 
 export const TopSellersSection = () => {
-  // Show only the first 4 sellers on the homepage
-  const displayedSellers = sellers.slice(0, 4);
+  // Show only the first 6 sellers on the homepage (increased from 4)
+  const displayedSellers = sellers.slice(0, 6);
   
   return (
     <section className="py-8 container mx-auto px-4 dark:bg-gray-900">
@@ -18,7 +18,7 @@ export const TopSellersSection = () => {
         </Link>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {displayedSellers.map((seller) => (
           <Link to={`/seller/${seller.id}`} key={seller.id}>
             <Card className="overflow-hidden hover:shadow-md transition-shadow dark:bg-gray-800">
