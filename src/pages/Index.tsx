@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { HeroCarousel } from "@/components/HeroCarousel";
@@ -16,6 +16,9 @@ import { useTheme } from "next-themes";
 import { Search, LogOut, User, ChevronDown } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { sellers } from "@/data/mockData";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,10 +29,24 @@ import {
 const Index = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<typeof sellers>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
   const { theme } = useTheme();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  // Update suggestions as user types
+  useEffect(() => {
+    if (searchQuery.trim() !== "") {
+      const filtered = sellers.filter(
+        seller => seller.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setSuggestions(filtered.slice(0, 5)); // Limit to 5 suggestions
+    } else {
+      setSuggestions([]);
+    }
+  }, [searchQuery]);
 
   const handleButtonClick = (path: string, action: string) => {
     if (isAuthenticated) {
@@ -46,9 +63,15 @@ const Index = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    setShowSuggestions(false);
     if (searchQuery.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
     }
+  };
+
+  const handleSuggestionClick = (sellerId: number) => {
+    setShowSuggestions(false);
+    navigate(`/seller/${sellerId}`);
   };
 
   return (
@@ -72,7 +95,15 @@ const Index = () => {
               placeholder="Search products, suppliers..." 
               className="w-full pl-10 dark:bg-gray-700 dark:text-white"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setShowSuggestions(e.target.value.trim() !== "");
+              }}
+              onFocus={() => setShowSuggestions(searchQuery.trim() !== "")}
+              onBlur={() => {
+                // Delayed hiding to allow clicks on suggestions
+                setTimeout(() => setShowSuggestions(false), 200);
+              }}
             />
             <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
             <Button 
@@ -83,6 +114,30 @@ const Index = () => {
             >
               <Search className="h-4 w-4" />
             </Button>
+
+            {/* Suggestions Dropdown */}
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-10 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
+                <ul className="py-1">
+                  {suggestions.map((seller) => (
+                    <li 
+                      key={seller.id} 
+                      className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center"
+                      onClick={() => handleSuggestionClick(seller.id)}
+                    >
+                      <Avatar className="w-8 h-8 mr-2">
+                        <AvatarImage src={seller.image} />
+                        <AvatarFallback>{seller.name.substring(0, 2)}</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="dark:text-white font-medium">{seller.name}</p>
+                        <Badge variant="secondary" className="text-xs dark:bg-gray-700">{seller.badge}</Badge>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </form>
           
           <div className="flex items-center space-x-2">
@@ -155,7 +210,15 @@ const Index = () => {
               placeholder="Search products, suppliers..." 
               className="w-full pl-10 dark:bg-gray-700 dark:text-white"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setShowSuggestions(e.target.value.trim() !== "");
+              }}
+              onFocus={() => setShowSuggestions(searchQuery.trim() !== "")}
+              onBlur={() => {
+                // Delayed hiding to allow clicks on suggestions
+                setTimeout(() => setShowSuggestions(false), 200);
+              }}
             />
             <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
             <Button 
@@ -166,6 +229,30 @@ const Index = () => {
             >
               <Search className="h-4 w-4" />
             </Button>
+
+            {/* Suggestions Dropdown for Mobile */}
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-1 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
+                <ul className="py-1">
+                  {suggestions.map((seller) => (
+                    <li 
+                      key={seller.id} 
+                      className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center"
+                      onClick={() => handleSuggestionClick(seller.id)}
+                    >
+                      <Avatar className="w-8 h-8 mr-2">
+                        <AvatarImage src={seller.image} />
+                        <AvatarFallback>{seller.name.substring(0, 2)}</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="dark:text-white font-medium">{seller.name}</p>
+                        <Badge variant="secondary" className="text-xs dark:bg-gray-700">{seller.badge}</Badge>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </form>
         </div>
       </header>

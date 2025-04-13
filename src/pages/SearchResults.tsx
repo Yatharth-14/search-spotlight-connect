@@ -11,6 +11,14 @@ import { sellers } from "@/data/mockData";
 import { Footer } from "@/components/Footer";
 import { MovingBanner } from "@/components/MovingBanner";
 import { Link } from "react-router-dom";
+import { 
+  CommandDialog, 
+  CommandEmpty, 
+  CommandGroup, 
+  CommandInput, 
+  CommandItem, 
+  CommandList 
+} from "@/components/ui/command";
 
 const SearchResults = () => {
   const navigate = useNavigate();
@@ -21,6 +29,8 @@ const SearchResults = () => {
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [results, setResults] = useState(sellers);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<typeof sellers>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   // Load recent searches from localStorage
   useEffect(() => {
@@ -53,14 +63,32 @@ const SearchResults = () => {
     }
   }, [initialQuery]);
 
+  // Update suggestions as user types
+  useEffect(() => {
+    if (searchQuery.trim() !== "") {
+      const filtered = sellers.filter(
+        seller => seller.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setSuggestions(filtered.slice(0, 5)); // Limit to 5 suggestions
+    } else {
+      setSuggestions([]);
+    }
+  }, [searchQuery]);
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    setShowSuggestions(false);
     navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
   };
 
   const handleRecentSearchClick = (query: string) => {
     setSearchQuery(query);
     navigate(`/search?q=${encodeURIComponent(query)}`);
+  };
+
+  const handleSuggestionClick = (sellerId: number) => {
+    setShowSuggestions(false);
+    navigate(`/seller/${sellerId}`);
   };
 
   return (
@@ -92,7 +120,15 @@ const SearchResults = () => {
               placeholder="Search sellers, products..." 
               className="pl-10 pr-4 py-2 w-full dark:bg-gray-700 dark:text-white"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setShowSuggestions(e.target.value.trim() !== "");
+              }}
+              onFocus={() => setShowSuggestions(searchQuery.trim() !== "")}
+              onBlur={() => {
+                // Delayed hiding to allow clicks on suggestions
+                setTimeout(() => setShowSuggestions(false), 200);
+              }}
             />
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
             <Button 
@@ -101,6 +137,30 @@ const SearchResults = () => {
             >
               Search
             </Button>
+            
+            {/* Suggestions Dropdown */}
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-1 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
+                <ul className="py-1">
+                  {suggestions.map((seller) => (
+                    <li 
+                      key={seller.id} 
+                      className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center"
+                      onClick={() => handleSuggestionClick(seller.id)}
+                    >
+                      <Avatar className="w-8 h-8 mr-2">
+                        <AvatarImage src={seller.image} />
+                        <AvatarFallback>{seller.name.substring(0, 2)}</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="dark:text-white font-medium">{seller.name}</p>
+                        <Badge variant="secondary" className="text-xs dark:bg-gray-700">{seller.badge}</Badge>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </form>
         

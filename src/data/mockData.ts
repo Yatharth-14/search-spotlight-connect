@@ -1,4 +1,3 @@
-
 // Mock data for the entire application
 
 // Carousel Images
@@ -43,10 +42,16 @@ export const categories = [
 
 // Top Sellers
 export const sellers = [
-  { id: 1, name: "TechPro Solutions", badge: "Top Vendor", products: 145, rating: 4.9, image: "https://i.pravatar.cc/150?u=1" },
-  { id: 2, name: "ElectraTech", badge: "Premium", products: 98, rating: 4.7, image: "https://i.pravatar.cc/150?u=2" },
-  { id: 3, name: "Global Gear", badge: "Popular", products: 120, rating: 4.8, image: "https://i.pravatar.cc/150?u=3" },
-  { id: 4, name: "FutureTech", badge: "Trusted", products: 210, rating: 4.8, image: "https://i.pravatar.cc/150?u=4" },
+  { id: 1, name: "TechPro Solutions", badge: "Top Vendor", products: 145, rating: 4.9, image: "https://i.pravatar.cc/150?u=1", description: "Leading provider of enterprise tech solutions with over 10 years of experience in the industry.", address: "123 Tech Park, Silicon Valley", contact: "+1 (555) 123-4567", email: "info@techprosolutions.com" },
+  { id: 2, name: "ElectraTech", badge: "Premium", products: 98, rating: 4.7, image: "https://i.pravatar.cc/150?u=2", description: "Specializing in electrical components and innovative power solutions for industrial applications.", address: "456 Circuit Avenue, Boston", contact: "+1 (555) 234-5678", email: "sales@electratech.com" },
+  { id: 3, name: "Global Gear", badge: "Popular", products: 120, rating: 4.8, image: "https://i.pravatar.cc/150?u=3", description: "International supplier of mechanical equipment and precision engineering tools.", address: "789 Industrial Lane, Chicago", contact: "+1 (555) 345-6789", email: "support@globalgear.com" },
+  { id: 4, name: "FutureTech", badge: "Trusted", products: 210, rating: 4.8, image: "https://i.pravatar.cc/150?u=4", description: "Cutting-edge technological innovations for businesses looking to stay ahead of the curve.", address: "101 Innovation Road, Austin", contact: "+1 (555) 456-7890", email: "hello@futuretech.io" },
+  { id: 5, name: "SmartSystems", badge: "Verified", products: 87, rating: 4.6, image: "https://i.pravatar.cc/150?u=5", description: "Intelligent automation systems and IoT solutions for modern businesses.", address: "202 Smart Street, Seattle", contact: "+1 (555) 567-8901", email: "info@smartsystems.com" },
+  { id: 6, name: "EcoTech Solutions", badge: "Eco-Friendly", products: 76, rating: 4.5, image: "https://i.pravatar.cc/150?u=6", description: "Sustainable technology solutions with a focus on reducing environmental impact.", address: "303 Green Boulevard, Portland", contact: "+1 (555) 678-9012", email: "green@ecotechsolutions.org" },
+  { id: 7, name: "Industrial Innovators", badge: "Expert", products: 132, rating: 4.7, image: "https://i.pravatar.cc/150?u=7", description: "Revolutionizing industrial processes with innovative machinery and equipment.", address: "404 Factory Lane, Detroit", contact: "+1 (555) 789-0123", email: "sales@industrialinnovators.com" },
+  { id: 8, name: "Tech Titans", badge: "Platinum", products: 185, rating: 4.9, image: "https://i.pravatar.cc/150?u=8", description: "Premium technology provider for enterprise-level solutions and services.", address: "505 Titan Tower, New York", contact: "+1 (555) 890-1234", email: "enterprise@techtitans.com" },
+  { id: 9, name: "Quantum Computing", badge: "Advanced", products: 64, rating: 4.8, image: "https://i.pravatar.cc/150?u=9", description: "Specializing in next-generation quantum computing solutions for research and industry.", address: "606 Quantum Court, San Francisco", contact: "+1 (555) 901-2345", email: "quantum@quantumcomputing.tech" },
+  { id: 10, name: "Digital Dynamics", badge: "Innovative", products: 109, rating: 4.6, image: "https://i.pravatar.cc/150?u=10", description: "Creating dynamic digital solutions for businesses in the modern marketplace.", address: "707 Digital Drive, Los Angeles", contact: "+1 (555) 012-3456", email: "info@digitaldynamics.co" }
 ];
 
 // Testimonials
