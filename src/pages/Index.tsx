@@ -24,6 +24,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { MotionConfig } from "framer-motion";
 
 const Index = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
@@ -38,8 +39,8 @@ const Index = () => {
   // Update suggestions as user types - modified to show suggestions immediately
   useEffect(() => {
     if (searchQuery.trim() !== "") {
-      const filtered = sellers.filter(
-        seller => seller.name.toLowerCase().includes(searchQuery.toLowerCase())
+      const filtered = sellers.filter((seller) =>
+        seller.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setSuggestions(filtered.slice(0, 5)); // Limit to 5 suggestions
       setShowSuggestions(true); // Always show suggestions when there's input
@@ -51,7 +52,9 @@ const Index = () => {
 
   const handleButtonClick = (path: string, action: string) => {
     if (isAuthenticated) {
-      navigate(path);
+      setTimeout(() => {
+        navigate(path);
+      }, 500); //500ms delay
     } else {
       toast({
         title: "Authentication Required",
@@ -89,27 +92,30 @@ const Index = () => {
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center">
             <div className="flex items-center">
-              <img 
-                src="/lovable-uploads/c2c0e920-a554-4d65-8e05-10b2d47db13e.png" 
-                alt="National Trade Fair" 
-                className={`h-10 md:h-12 ${theme === 'dark' ? 'invert' : ''}`}
+              <img
+                src="/lovable-uploads/c2c0e920-a554-4d65-8e05-10b2d47db13e.png"
+                alt="National Trade Fair"
+                className={`h-10 md:h-12 ${theme === "dark" ? "invert" : ""}`}
               />
             </div>
           </div>
-          
-          <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-4 relative">
-            <Input 
-              type="text" 
-              placeholder="Search products, suppliers..." 
+
+          <form
+            onSubmit={handleSearch}
+            className="hidden md:flex flex-1 max-w-md mx-4 relative"
+          >
+            <Input
+              type="text"
+              placeholder="Search products, suppliers..."
               className="w-full pl-10 dark:bg-gray-700 dark:text-white"
               value={searchQuery}
               onChange={handleSearchInputChange}
               // Remove onFocus and onBlur handlers to keep showing suggestions while typing
             />
             <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-            <Button 
-              type="submit" 
-              size="sm" 
+            <Button
+              type="submit"
+              size="sm"
               className="absolute right-1 top-1 h-8"
               variant="ghost"
             >
@@ -121,18 +127,27 @@ const Index = () => {
               <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-10 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
                 <ul className="py-1">
                   {suggestions.map((seller) => (
-                    <li 
-                      key={seller.id} 
+                    <li
+                      key={seller.id}
                       className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center"
                       onClick={() => handleSuggestionClick(seller.id)}
                     >
                       <Avatar className="w-8 h-8 mr-2">
                         <AvatarImage src={seller.image} />
-                        <AvatarFallback>{seller.name.substring(0, 2)}</AvatarFallback>
+                        <AvatarFallback>
+                          {seller.name.substring(0, 2)}
+                        </AvatarFallback>
                       </Avatar>
                       <div>
-                        <p className="dark:text-white font-medium">{seller.name}</p>
-                        <Badge variant="secondary" className="text-xs dark:bg-gray-700">{seller.badge}</Badge>
+                        <p className="dark:text-white font-medium">
+                          {seller.name}
+                        </p>
+                        <Badge
+                          variant="secondary"
+                          className="text-xs dark:bg-gray-700"
+                        >
+                          {seller.badge}
+                        </Badge>
                       </div>
                     </li>
                   ))}
@@ -140,20 +155,22 @@ const Index = () => {
               </div>
             )}
           </form>
-          
+
           <div className="flex items-center space-x-2">
             <div className="hidden sm:flex space-x-2">
-              <Button 
-                variant="outline" 
-                size="sm" 
+              <Button
+                variant="outline"
+                size="sm"
                 className="dark:text-white dark:hover:bg-gray-700"
-                onClick={() => handleButtonClick("/post-requirement", "post requirements")}
+                onClick={() =>
+                  handleButtonClick("/post-requirement", "post requirements")
+                }
               >
                 Post Requirements
               </Button>
-              <Button 
-                variant="outline" 
-                size="sm" 
+              <Button
+                variant="outline"
+                size="sm"
                 className="hidden lg:inline-flex dark:text-white dark:hover:bg-gray-700"
                 onClick={() => handleButtonClick("/bid-now", "place bids")}
               >
@@ -161,14 +178,14 @@ const Index = () => {
               </Button>
             </div>
             <ThemeToggle />
-            
+
             {isAuthenticated ? (
               <div className="flex items-center space-x-2">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
+                    <Button
+                      variant="outline"
+                      size="sm"
                       className="flex items-center dark:text-white"
                     >
                       <User className="h-4 w-4 mr-1" />
@@ -176,7 +193,10 @@ const Index = () => {
                       <ChevronDown className="h-4 w-4 ml-1" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="bg-white dark:bg-gray-800 w-48">
+                  <DropdownMenuContent
+                    align="end"
+                    className="bg-white dark:bg-gray-800 w-48"
+                  >
                     <DropdownMenuItem onClick={() => navigate("/my-profile")}>
                       <User className="h-4 w-4 mr-2" />
                       <span>My Profile</span>
@@ -195,29 +215,34 @@ const Index = () => {
                     <Button className="bg-primary rounded-r-none">Login</Button>
                   </Link>
                   <Link to="/register">
-                    <Button variant="outline" className="dark:text-white rounded-l-none border-l-0">Register</Button>
+                    <Button
+                      variant="outline"
+                      className="dark:text-white rounded-l-none border-l-0"
+                    >
+                      Register
+                    </Button>
                   </Link>
                 </div>
               </div>
             )}
           </div>
         </div>
-        
+
         {/* Mobile Search - also update mobile search */}
         <div className="md:hidden px-4 pb-3">
           <form onSubmit={handleSearch} className="relative">
-            <Input 
-              type="text" 
-              placeholder="Search products, suppliers..." 
+            <Input
+              type="text"
+              placeholder="Search products, suppliers..."
               className="w-full pl-10 dark:bg-gray-700 dark:text-white"
               value={searchQuery}
               onChange={handleSearchInputChange}
               // Remove onFocus and onBlur handlers to keep showing suggestions while typing
             />
             <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-            <Button 
-              type="submit" 
-              size="sm" 
+            <Button
+              type="submit"
+              size="sm"
               className="absolute right-1 top-1 h-8"
               variant="ghost"
             >
@@ -229,18 +254,27 @@ const Index = () => {
               <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-1 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
                 <ul className="py-1">
                   {suggestions.map((seller) => (
-                    <li 
-                      key={seller.id} 
+                    <li
+                      key={seller.id}
                       className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center"
                       onClick={() => handleSuggestionClick(seller.id)}
                     >
                       <Avatar className="w-8 h-8 mr-2">
                         <AvatarImage src={seller.image} />
-                        <AvatarFallback>{seller.name.substring(0, 2)}</AvatarFallback>
+                        <AvatarFallback>
+                          {seller.name.substring(0, 2)}
+                        </AvatarFallback>
                       </Avatar>
                       <div>
-                        <p className="dark:text-white font-medium">{seller.name}</p>
-                        <Badge variant="secondary" className="text-xs dark:bg-gray-700">{seller.badge}</Badge>
+                        <p className="dark:text-white font-medium">
+                          {seller.name}
+                        </p>
+                        <Badge
+                          variant="secondary"
+                          className="text-xs dark:bg-gray-700"
+                        >
+                          {seller.badge}
+                        </Badge>
                       </div>
                     </li>
                   ))}
@@ -275,6 +309,7 @@ const Index = () => {
       {/* Footer */}
       <Footer />
     </div>
+    
   );
 };
 
