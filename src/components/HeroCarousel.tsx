@@ -1,44 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { cards } from "@/data/mockData";
 
-const cards = [
-  {
-    title: "50% OFF",
-    description: "On all items above ₹999",
-    price: "Use Code: HALFOFF",
-    bg: "bg-gradient-to-r from-purple-600 to-pink-500",
-  },
-  {
-    title: "FREE SHIPPING",
-    description: "For orders above ₹499",
-    price: "Limited time only",
-    bg: "bg-gradient-to-r from-green-400 to-blue-500",
-  },
-  {
-    title: "BUY 1 GET 1",
-    description: "On select items",
-    price: "BOGO SALE",
-    bg: "bg-gradient-to-r from-yellow-400 to-red-500",
-  },
-  {
-    title: "EXTRA 20% OFF",
-    description: "Using HDFC Cards",
-    price: "Bank Offer",
-    bg: "bg-gradient-to-r from-blue-600 to-indigo-500",
-  },
-  {
-    title: "NEW ARRIVALS",
-    description: "Trendy fashion wear",
-    price: "Starting at ₹299",
-    bg: "bg-gradient-to-r from-pink-500 to-orange-400",
-  },
-];
 
 export const HeroCarousel = () => {
   return (
     <div className="w-full py-10 px-4 sm:px-6 lg:px-8 ">
       <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        
         {/* Card 1: Big Featured Card (takes 2 cols and 2 rows) */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}

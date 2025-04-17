@@ -1,16 +1,6 @@
-
 import React, { useState, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
-
-// Default offers if nothing in localStorage
-const defaultOffers = [
-  "🔥 Big Summer Sale — Up to 70% OFF!",
-  "🚚 Free Shipping on Orders Above ₹499",
-  "💳 Extra 10% Cashback on Credit Cards",
-  "🎁 Buy 1 Get 1 Free — Limited Time Offer!",
-  "🛍️ New Arrivals Just Dropped!",
-  "🏷️ Festive Combo Deals Available Now",
-];
+import { defaultOffers } from "@/data/mockData";
 
 export const MovingBanner = () => {
   const controls = useAnimation();
