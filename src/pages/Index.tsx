@@ -13,7 +13,8 @@ import { LoginModal } from "@/components/auth/LoginModal";
 import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "next-themes";
 import { Search, LogOut, User, ChevronDown } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { sellers } from "@/data/mockData";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -24,6 +25,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  handleButtonClick,
+  handleSearch,
+  handleSuggestionClick,
+  handleSearchInputChange,
+} from "@/handlerFunctions/indexPageHandlerFunctions";
 
 const Index = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
@@ -48,38 +55,6 @@ const Index = () => {
     }
   }, [searchQuery]);
 
-  const handleButtonClick = (path: string, action: string) => {
-    if (isAuthenticated) {
-      setTimeout(() => {
-        navigate(path);
-      }, 500);
-    } else {
-      toast({
-        title: "Authentication Required",
-        description: `You need to login to ${action}`,
-        variant: "destructive",
-      });
-      navigate("/login");
-    }
-  };
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    setShowSuggestions(false);
-    if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
-    }
-  };
-
-  const handleSuggestionClick = (sellerId: number) => {
-    setShowSuggestions(false);
-    navigate(`/seller/${sellerId}`);
-  };
-
-  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
-
   return (
     <div className="min-h-screen flex flex-col dark:bg-gray-900">
       {/* Header */}
@@ -95,13 +70,18 @@ const Index = () => {
           </div>
 
           {/* Desktop Search */}
-          <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-4 relative">
+          <form
+            onSubmit={(e) =>
+              handleSearch(e, searchQuery, setShowSuggestions, navigate)
+            }
+            className="hidden md:flex flex-1 max-w-md mx-4 relative"
+          >
             <Input
               type="text"
               placeholder="Search products, suppliers..."
               className="w-full pl-10 dark:bg-gray-700 dark:text-white"
               value={searchQuery}
-              onChange={handleSearchInputChange}
+              onChange={(e) => handleSearchInputChange(e, setSearchQuery)}
             />
             <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
             <Button
@@ -120,14 +100,24 @@ const Index = () => {
                     <li
                       key={seller.id}
                       className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center"
-                      onClick={() => handleSuggestionClick(seller.id)}
+                      onClick={() =>
+                        handleSuggestionClick(
+                          seller.id,
+                          setShowSuggestions,
+                          navigate
+                        )
+                      }
                     >
                       <Avatar className="w-8 h-8 mr-2">
                         <AvatarImage src={seller.image} />
-                        <AvatarFallback>{seller.name.substring(0, 2)}</AvatarFallback>
+                        <AvatarFallback>
+                          {seller.name.substring(0, 2)}
+                        </AvatarFallback>
                       </Avatar>
                       <div>
-                        <p className="dark:text-white font-medium">{seller.name}</p>
+                        <p className="dark:text-white font-medium">
+                          {seller.name}
+                        </p>
                         <Badge
                           variant="secondary"
                           className="text-xs dark:bg-gray-700"
@@ -150,7 +140,15 @@ const Index = () => {
                 variant="outline"
                 size="sm"
                 className="dark:text-white dark:hover:bg-gray-700"
-                onClick={() => handleButtonClick("/post-requirement", "post requirements")}
+                onClick={() =>
+                  handleButtonClick(
+                    "/post-requirement",
+                    "post requirements",
+                    isAuthenticated,
+                    navigate,
+                    toast
+                  )
+                }
               >
                 Post Requirements
               </Button>
@@ -158,7 +156,15 @@ const Index = () => {
                 variant="outline"
                 size="sm"
                 className="lg:inline-flex dark:text-white dark:hover:bg-gray-700"
-                onClick={() => handleButtonClick("/bid-now", "place bids")}
+                onClick={() =>
+                  handleButtonClick(
+                    "/bid-now",
+                    "place bids",
+                    isAuthenticated,
+                    navigate,
+                    toast
+                  )
+                }
               >
                 Bid Now
               </Button>
@@ -168,15 +174,42 @@ const Index = () => {
             <div className="md:hidden">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="flex items-center dark:text-white">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center dark:text-white"
+                  >
                     <ChevronDown className="h-4 w-4 ml-1" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="bg-white dark:bg-gray-800 w-48">
-                  <DropdownMenuItem onClick={() => handleButtonClick("/post-requirement", "post requirements")}>
+                <DropdownMenuContent
+                  align="end"
+                  className="bg-white dark:bg-gray-800 w-48"
+                >
+                  <DropdownMenuItem
+                    onClick={() =>
+                      handleButtonClick(
+                        "/post-requirement",
+                        "post requirements",
+                        isAuthenticated,
+                        navigate,
+                        toast
+                      )
+                    }
+                  >
                     Post Requirements
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleButtonClick("/bid-now", "place bids")}>
+                  <DropdownMenuItem
+                    onClick={() =>
+                      handleButtonClick(
+                        "/bid-now",
+                        "place bids",
+                        isAuthenticated,
+                        navigate,
+                        toast
+                      )
+                    }
+                  >
                     Bid Now
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -188,13 +221,20 @@ const Index = () => {
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="flex items-center dark:text-white">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center dark:text-white"
+                  >
                     <User className="h-4 w-4 mr-1" />
                     <span className="hidden sm:inline">{user?.name}</span>
                     <ChevronDown className="h-4 w-4 ml-1" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="bg-white dark:bg-gray-800 w-48">
+                <DropdownMenuContent
+                  align="end"
+                  className="bg-white dark:bg-gray-800 w-48"
+                >
                   <DropdownMenuItem onClick={() => navigate("/my-profile")}>
                     <User className="h-4 w-4 mr-2" />
                     <span>My Profile</span>
@@ -225,13 +265,18 @@ const Index = () => {
 
         {/* Mobile Search */}
         <div className="md:hidden px-4 pb-3 relative">
-          <form onSubmit={handleSearch} className="relative">
+          <form
+            onSubmit={(e) =>
+              handleSearch(e, searchQuery, setShowSuggestions, navigate)
+            }
+            className="relative"
+          >
             <Input
               type="text"
               placeholder="Search products, suppliers..."
               className="w-full pl-10 dark:bg-gray-700 dark:text-white"
               value={searchQuery}
-              onChange={handleSearchInputChange}
+              onChange={(e) => handleSearchInputChange(e, setSearchQuery)}
             />
             <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
             <Button
@@ -250,14 +295,24 @@ const Index = () => {
                     <li
                       key={seller.id}
                       className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center"
-                      onClick={() => handleSuggestionClick(seller.id)}
+                      onClick={() =>
+                        handleSuggestionClick(
+                          seller.id,
+                          setShowSuggestions,
+                          navigate
+                        )
+                      }
                     >
                       <Avatar className="w-8 h-8 mr-2">
                         <AvatarImage src={seller.image} />
-                        <AvatarFallback>{seller.name.substring(0, 2)}</AvatarFallback>
+                        <AvatarFallback>
+                          {seller.name.substring(0, 2)}
+                        </AvatarFallback>
                       </Avatar>
                       <div>
-                        <p className="dark:text-white font-medium">{seller.name}</p>
+                        <p className="dark:text-white font-medium">
+                          {seller.name}
+                        </p>
                         <Badge
                           variant="secondary"
                           className="text-xs dark:bg-gray-700"
@@ -283,7 +338,10 @@ const Index = () => {
       <TestimonialSection />
       <Footer />
 
-      <LoginModal open={loginModalOpen} onOpenChange={() => setLoginModalOpen(false)} />
+      <LoginModal
+        open={loginModalOpen}
+        onOpenChange={() => setLoginModalOpen(false)}
+      />
     </div>
   );
 };
