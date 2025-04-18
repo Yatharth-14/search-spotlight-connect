@@ -4,7 +4,7 @@ import { cards } from "@/data/mockData";
 
 export const HeroCarousel = () => {
   return (
-    <div className="w-full py-10 px-2 sm:px-4 lg:px-2 ">
+    <div className="w-full py-2 px-2 sm:px-4 lg:px-2 ">
       <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
         {/* Card 1: Big Featured Card (takes 2 cols and 2 rows) */}
         <motion.div
