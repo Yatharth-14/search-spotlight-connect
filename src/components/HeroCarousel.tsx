@@ -2,17 +2,16 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { cards } from "@/data/mockData";
 
-
 export const HeroCarousel = () => {
   return (
-    <div className="w-full py-10 px-4 sm:px-6 lg:px-8 ">
-      <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="w-full py-10 px-2 sm:px-4 lg:px-2 ">
+      <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
         {/* Card 1: Big Featured Card (takes 2 cols and 2 rows) */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className={`lg:col-span-2 lg:row-span-2 rounded-none h-[387px] p-8 rounded-none shadow-xl text-white flex flex-col justify-between ${cards[0].bg}`}
+          className={`lg:col-span-2 lg:row-span-2 rounded-none h-[368px] p-8 rounded-none shadow-xl text-white flex flex-col justify-between ${cards[0].bg}`}
         >
           <div>
             <h1 className="text-4xl font-bold mb-2">{cards[0].title}</h1>
@@ -27,7 +26,7 @@ export const HeroCarousel = () => {
         </motion.div>
 
         {/* Column: Card 2 and 3 */}
-        <div className="flex flex-col gap-6 lg:col-span-1">
+        <div className="flex flex-col gap-2 lg:col-span-1">
           {[cards[1], cards[2]].map((offer, idx) => (
             <motion.div
               key={idx}
@@ -51,7 +50,7 @@ export const HeroCarousel = () => {
         </div>
 
         {/* Column: Card 4 and 5 */}
-        <div className="flex flex-col gap-6 lg:col-span-1">
+        <div className="flex flex-col gap-2 lg:col-span-1">
           {[cards[3], cards[4]].map((offer, idx) => (
             <motion.div
               key={idx}

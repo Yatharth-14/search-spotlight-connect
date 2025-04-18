@@ -10,7 +10,6 @@ export const defaultOffers = [
   "🏷️ Festive Combo Deals Available Now",
 ];
 
-
 // Hero carousel Card data
 export const cards = [
   {
@@ -44,7 +43,6 @@ export const cards = [
     bg: "bg-gradient-to-r from-pink-500 to-orange-400",
   },
 ];
-
 
 // Carousel Images
 export const carouselImages = [
@@ -84,6 +82,34 @@ export const categories = [
   { id: 6, name: "Smart Devices", color: "bg-orange-500" },
   { id: 7, name: "Networking Equipment", color: "bg-pink-500" },
   { id: 8, name: "Software Solutions", color: "bg-teal-500" },
+];
+
+// New sellers
+export const newSellers = [
+  {
+    id: "n1",
+    name: "Riya Mehta",
+    image: "https://randomuser.me/api/portraits/women/65.jpg",
+    badge: "Newcomer",
+    products: 10,
+    rating: 4.2,
+  },
+  {
+    id: "n2",
+    name: "Aryan Shah",
+    image: "https://randomuser.me/api/portraits/men/75.jpg",
+    badge: "Rising Star",
+    products: 8,
+    rating: 4.0,
+  },
+  {
+    id: "n3",
+    name: "Sneha Verma",
+    image: "https://randomuser.me/api/portraits/women/55.jpg",
+    badge: "New Arrival",
+    products: 12,
+    rating: 4.3,
+  },
 ];
 
 // Top Sellers
