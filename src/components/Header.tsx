@@ -4,13 +4,24 @@ import { useToast } from "@/hooks/use-toast";
 import { sellers } from "@/data/mockData";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, ChevronDown, User, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { handleButtonClick, handleSearch, handleSuggestionClick, handleSearchInputChange } from "@/handlerFunctions/indexPageHandlerFunctions";
+import {
+  handleButtonClick,
+  handleSearch,
+  handleSuggestionClick,
+  handleSearchInputChange,
+} from "@/handlerFunctions/indexPageHandlerFunctions";
+import { Logo } from "./Logo";
 
 const Header = ({
   searchQuery,
@@ -31,11 +42,7 @@ const Header = ({
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <img
-            src="/lovable-uploads/c2c0e920-a554-4d65-8e05-10b2d47db13e.png"
-            alt="National Trade Fair"
-            className={`h-10 md:h-12 ${theme === "dark" ? "invert" : ""}`}
-          />
+          <Logo />
         </div>
 
         {/* Desktop Search */}
