@@ -11,7 +11,8 @@ export const HeroCarousel = () => {
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className={`lg:col-span-2 lg:row-span-2 rounded-none h-[368px] p-8 rounded-none shadow-xl text-white flex flex-col justify-between ${cards[0].bg}`}
+          style={{ backgroundImage: `url(${cards[0].image})` }}
+          className="lg:col-span-2 lg:row-span-2 rounded-none h-[368px] p-8 shadow-xl text-white flex flex-col justify-between bg-cover bg-center relative"
         >
           <div>
             <h1 className="text-4xl font-bold mb-2">{cards[0].title}</h1>
@@ -33,7 +34,8 @@ export const HeroCarousel = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 * idx }}
-              className={`rounded-lg p-6 shadow-md text-center rounded-none ${offer.bg}`}
+              style={{backgroundImage: `url(${offer.image})`}}
+              className="rounded-lg p-6 shadow-md text-center bg-cover bg-center relative rounded-none"
             >
               <h2 className="text-green-200 text-sm font-bold uppercase mb-1">
                 {offer.title}
@@ -56,8 +58,9 @@ export const HeroCarousel = () => {
               key={idx}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
+              style={{backgroundImage: `url(${offer.image})`}}
               transition={{ duration: 0.5, delay: 0.1 * (idx + 2) }}
-              className={`rounded-lg p-6 shadow-md text-center rounded-none ${offer.bg}`}
+              className="rounded-lg p-6 shadow-md text-center bg-cover bg-center relative rounded-none"
             >
               <h2 className="text-green-200 text-sm font-bold uppercase mb-1">
                 {offer.title}

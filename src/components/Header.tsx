@@ -45,6 +45,11 @@ interface HeaderProps {
   isAuthenticated: boolean;
   user: User | null;
   logout: () => void;
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  suggestions: Seller[];
+  showSuggestions: boolean;
+  setShowSuggestions: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Header = ({ isAuthenticated, user, logout }: HeaderProps) => {

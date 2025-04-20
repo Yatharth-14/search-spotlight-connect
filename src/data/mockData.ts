@@ -16,61 +16,35 @@ export const cards = [
     title: "50% OFF",
     description: "On all items above ₹999",
     price: "Use Code: HALFOFF",
-    bg: "bg-gradient-to-r from-purple-600 to-pink-500",
+    image: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", // Fashion (clothing)
   },
   {
     title: "FREE SHIPPING",
     description: "For orders above ₹499",
     price: "Limited time only",
-    bg: "bg-gradient-to-r from-green-400 to-blue-500",
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", // Electronics (headphones)
   },
   {
     title: "BUY 1 GET 1",
     description: "On select items",
     price: "BOGO SALE",
-    bg: "bg-gradient-to-r from-yellow-400 to-red-500",
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", // Footwear (sneakers)
   },
   {
     title: "EXTRA 20% OFF",
     description: "Using HDFC Cards",
     price: "Bank Offer",
-    bg: "bg-gradient-to-r from-blue-600 to-indigo-500",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", // Accessories (watch)
   },
   {
     title: "NEW ARRIVALS",
     description: "Trendy fashion wear",
     price: "Starting at ₹299",
-    bg: "bg-gradient-to-r from-pink-500 to-orange-400",
+    image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", // Fashion (women’s clothing)
   },
 ];
 
-// Carousel Images
-export const carouselImages = [
-  {
-    id: 1,
-    url: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-    title: "Technology Solutions",
-    description: "Discover the latest tech innovations for your business",
-  },
-  {
-    id: 2,
-    url: "https://images.unsplash.com/photo-1518770660439-4636190af475?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-    title: "Connect with Suppliers",
-    description: "Build relationships with global suppliers",
-  },
-  {
-    id: 3,
-    url: "https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-    title: "Business Opportunities",
-    description: "Explore new markets and business opportunities",
-  },
-  {
-    id: 4,
-    url: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-    title: "National Trade Fair",
-    description: "Where businesses connect and grow",
-  },
-];
+
 
 // Categories
 export const categories = [
@@ -358,5 +332,37 @@ export const featuredProducts = [
     title: "Smart Office Suite",
     description: "Connected devices for the modern workplace",
     category: "Office Equipment",
+  },
+];
+
+// Mock data for seller products
+export const mockProductSellersProfile = [
+  {
+    id: 1,
+    name: "Enterprise Server X9000",
+    price: "$2499",
+    category: "IT Hardware",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    id: 2,
+    name: "Professional Network Switch",
+    price: "$899",
+    category: "Networking",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    id: 3,
+    name: "Industrial Automation Controller",
+    price: "$1299",
+    category: "Industrial Equipment",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    id: 4,
+    name: "Smart Office Bundle",
+    price: "$599",
+    category: "Office Equipment",
+    image: "https://via.placeholder.com/150",
   },
 ];
