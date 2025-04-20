@@ -44,41 +44,8 @@ interface SellerProfile {
   verified?: boolean;
 }
 
-<<<<<<< Updated upstream
-=======
-// Mock data for seller products
-const mockProducts = [
-  {
-    id: 1,
-    name: "Enterprise Server X9000",
-    price: "$2499",
-    category: "IT Hardware",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 2,
-    name: "Professional Network Switch",
-    price: "$899",
-    category: "Networking",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 3,
-    name: "Industrial Automation Controller",
-    price: "$1299",
-    category: "Industrial Equipment",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 4,
-    name: "Smart Office Bundle",
-    price: "$599",
-    category: "Office Equipment",
-    image: "https://via.placeholder.com/150",
-  },
-];
 
->>>>>>> Stashed changes
+
 const SellerProfile = () => {
   const { sellerId } = useParams<{ sellerId: string }>();
   const [seller, setSeller] = useState<SellerProfile | null>(null);
@@ -224,21 +191,12 @@ const SellerProfile = () => {
 
             <div className="flex-1 text-center md:text-left">
               <div className="flex flex-col md:flex-row md:items-center gap-2 mb-2">
-<<<<<<< Updated upstream
-                <h1 className="text-2xl md:text-3xl font-bold dark:text-white">
-                  {seller.name}
-                </h1>
-                {seller.verified && (
-                  <CheckCircle2 className="h-6 w-6 text-blue-500" />
-                )}
-=======
                 <h1 className="text-2xl md:text-3xl font-bold dark:text-white flex justify-center items-center gap-2">
                   {seller.name}
                   {seller.verified && (
                     <CheckCircle2 className="h-6 w-6 mt-1 text-blue-500" />
                   )}
                 </h1>
->>>>>>> Stashed changes
               </div>
 
               <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-3">
@@ -314,11 +272,7 @@ const SellerProfile = () => {
               Featured Products
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-<<<<<<< Updated upstream
               {mockProductSellersProfile.map((product) => (
-=======
-              {mockProducts.map((product) => (
->>>>>>> Stashed changes
                 <Card
                   key={product.id}
                   className="overflow-hidden hover:shadow-lg transition-shadow dark:bg-gray-800"
