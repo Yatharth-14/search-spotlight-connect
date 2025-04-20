@@ -22,6 +22,7 @@ import {
   handleSearchInputChange,
 } from "@/handlerFunctions/indexPageHandlerFunctions";
 import { Logo } from "./Logo";
+import PostAndBidButton from "./ui/PostAndBidButton";
 
 const Header = ({
   searchQuery,
@@ -111,40 +112,7 @@ const Header = ({
         {/* Right Buttons */}
         <div className="flex items-center space-x-2">
           {/* Desktop Buttons */}
-          <div className="hidden md:flex space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              className="dark:text-white dark:hover:bg-gray-700"
-              onClick={() =>
-                handleButtonClick(
-                  "/post-requirement",
-                  "post requirements",
-                  isAuthenticated,
-                  navigate,
-                  toast
-                )
-              }
-            >
-              Post Requirements
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="lg:inline-flex dark:text-white dark:hover:bg-gray-700"
-              onClick={() =>
-                handleButtonClick(
-                  "/bid-now",
-                  "place bids",
-                  isAuthenticated,
-                  navigate,
-                  toast
-                )
-              }
-            >
-              Bid Now
-            </Button>
-          </div>
+          <PostAndBidButton></PostAndBidButton>
 
           {/* Dropdown for Mobile and Small Screens */}
           <div className="md:hidden">
