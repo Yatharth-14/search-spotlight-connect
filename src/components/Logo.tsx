@@ -1,6 +1,4 @@
-import React from "react";
 import { useTheme } from "next-themes";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Logo = () => {
   const { theme } = useTheme();

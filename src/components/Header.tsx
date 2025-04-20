@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -18,25 +19,54 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   handleButtonClick,
   handleSearch,
-  handleSuggestionClick,
   handleSearchInputChange,
+  handleSuggestionClick,
 } from "@/handlerFunctions/indexPageHandlerFunctions";
 import { Logo } from "./Logo";
 import PostAndBidButton from "./ui/PostAndBidButton";
+import { DropDownMenu } from "./ui/DropDownMenu";
+import { MobileSearch } from "./MobileSearch";
 
-const Header = ({
-  searchQuery,
-  setSearchQuery,
-  suggestions,
-  showSuggestions,
-  setShowSuggestions,
-  isAuthenticated,
-  user,
-  logout,
-}: any) => {
+// Define the Seller type (adjust based on src/data/mockData.ts)
+interface Seller {
+  id: number;
+  name: string;
+  image: string;
+  badge: string;
+}
+
+// Define the User type (adjust based on useAuth hook)
+interface User {
+  name: string;
+}
+
+// Define the props interface
+interface HeaderProps {
+  isAuthenticated: boolean;
+  user: User | null;
+  logout: () => void;
+}
+
+const Header = ({ isAuthenticated, user, logout }: HeaderProps) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<Seller[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const { theme } = useTheme();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      const filtered = sellers.filter((seller) =>
+        seller.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setSuggestions(filtered.slice(0, 5));
+      setShowSuggestions(true);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  }, [searchQuery]);
 
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
@@ -73,7 +103,7 @@ const Header = ({
           {showSuggestions && suggestions.length > 0 && (
             <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-10 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
               <ul className="py-1">
-                {suggestions.map((seller: any) => (
+                {suggestions.map((seller) => (
                   <li
                     key={seller.id}
                     className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center"
@@ -112,53 +142,10 @@ const Header = ({
         {/* Right Buttons */}
         <div className="flex items-center space-x-2">
           {/* Desktop Buttons */}
-          <PostAndBidButton></PostAndBidButton>
+          <PostAndBidButton />
 
           {/* Dropdown for Mobile and Small Screens */}
-          <div className="md:hidden">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex items-center dark:text-white"
-                >
-                  <ChevronDown className="h-4 w-4 ml-1" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="bg-white dark:bg-gray-800 w-48"
-              >
-                <DropdownMenuItem
-                  onClick={() =>
-                    handleButtonClick(
-                      "/post-requirement",
-                      "post requirements",
-                      isAuthenticated,
-                      navigate,
-                      toast
-                    )
-                  }
-                >
-                  Post Requirements
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() =>
-                    handleButtonClick(
-                      "/bid-now",
-                      "place bids",
-                      isAuthenticated,
-                      navigate,
-                      toast
-                    )
-                  }
-                >
-                  Bid Now
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          <DropDownMenu />
 
           <ThemeToggle />
 
@@ -208,69 +195,14 @@ const Header = ({
       </div>
 
       {/* Mobile Search */}
-      <div className="md:hidden px-4 pb-3 relative">
-        <form
-          onSubmit={(e) =>
-            handleSearch(e, searchQuery, setShowSuggestions, navigate)
-          }
-          className="relative"
-        >
-          <Input
-            type="text"
-            placeholder="Search products, suppliers..."
-            className="w-full pl-10 dark:bg-gray-700 dark:text-white"
-            value={searchQuery}
-            onChange={(e) => handleSearchInputChange(e, setSearchQuery)}
-          />
-          <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-          <Button
-            type="submit"
-            size="sm"
-            className="absolute right-1 top-1 h-8"
-            variant="ghost"
-          >
-            <Search className="h-4 w-4" />
-          </Button>
-
-          {showSuggestions && suggestions.length > 0 && (
-            <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-10 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
-              <ul className="py-1">
-                {suggestions.map((seller: any) => (
-                  <li
-                    key={seller.id}
-                    className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center"
-                    onClick={() =>
-                      handleSuggestionClick(
-                        seller.id,
-                        setShowSuggestions,
-                        navigate
-                      )
-                    }
-                  >
-                    <Avatar className="w-8 h-8 mr-2">
-                      <AvatarImage src={seller.image} />
-                      <AvatarFallback>
-                        {seller.name.substring(0, 2)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="dark:text-white font-medium">
-                        {seller.name}
-                      </p>
-                      <Badge
-                        variant="secondary"
-                        className="text-xs dark:bg-gray-700"
-                      >
-                        {seller.badge}
-                      </Badge>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </form>
-      </div>
+      <MobileSearch
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        suggestions={suggestions}
+        showSuggestions={showSuggestions}
+        setShowSuggestions={setShowSuggestions}
+        navigate={navigate}
+      />
     </header>
   );
 };
