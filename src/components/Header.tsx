@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, ChevronDown, User, LogOut } from "lucide-react";
+import { Search, Menu, User, LogOut } from "lucide-react"; // Added Menu icon for hamburger
 import { Link } from "react-router-dom";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import {
@@ -23,10 +23,11 @@ import {
 } from "@/handlerFunctions/indexPageHandlerFunctions";
 import { Logo } from "./Logo";
 import PostAndBidButton from "./ui/PostAndBidButton";
-import { DropDownMenu } from "./ui/DropDownMenu";
 import { MobileSearch } from "./MobileSearch";
+import { handleButtonClick } from "@/handlerFunctions/indexPageHandlerFunctions";
+import { useAuth } from "@/hooks/useAuth";
 
-// Define the Seller type (adjust based on src/data/mockData.ts)
+// Define the Seller type
 interface Seller {
   id: number;
   name: string;
@@ -34,7 +35,7 @@ interface Seller {
   badge: string;
 }
 
-// Define the User type (adjust based on useAuth hook)
+// Define the User type
 interface User {
   name: string;
 }
@@ -138,55 +139,119 @@ const Header = ({ isAuthenticated, user, logout }: HeaderProps) => {
         {/* Right Buttons */}
         <div className="flex items-center space-x-2">
           {/* Desktop Buttons */}
-          <PostAndBidButton />
+          <div className="hidden md:flex items-center space-x-2">
+            <PostAndBidButton />
+            {isAuthenticated ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center dark:text-white"
+                  >
+                    <User className="h-4 w-4 mr-1" />
+                    <span className="hidden sm:inline">{user?.name}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="bg-white dark:bg-gray-800 w-48"
+                >
+                  <DropdownMenuItem onClick={() => navigate("/my-profile")}>
+                    <User className="h-4 w-4 mr-2" />
+                    <span>My Profile</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={logout}>
+                    <LogOut className="h-4 w-4 mr-2" />
+                    <span>Logout</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <div className="flex space-x-2">
+                <Link to="/login">
+                  <Button className="bg-primary rounded-r-none">Login</Button>
+                </Link>
+                <Link to="/register">
+                  <Button
+                    variant="outline"
+                    className="dark:text-white rounded-l-none border-l-0"
+                  >
+                    Register
+                  </Button>
+                </Link>
+              </div>
+            )}
+          </div>
 
-          {/* Dropdown for Mobile and Small Screens */}
-          <DropDownMenu />
-
-          <ThemeToggle />
-
-          {isAuthenticated ? (
+          {/* Hamburger Menu for Mobile */}
+          <div className="md:hidden">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="flex items-center dark:text-white"
+                  className="dark:text-white"
                 >
-                  <User className="h-4 w-4 mr-1" />
-                  <span className="hidden sm:inline">{user?.name}</span>
-                  <ChevronDown className="h-4 w-4 ml-1" />
+                  <Menu className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 align="end"
                 className="bg-white dark:bg-gray-800 w-48"
               >
-                <DropdownMenuItem onClick={() => navigate("/my-profile")}>
-                  <User className="h-4 w-4 mr-2" />
-                  <span>My Profile</span>
+                <DropdownMenuItem
+                  onClick={() =>
+                    handleButtonClick(
+                      "/post-requirement",
+                      "post requirements",
+                      isAuthenticated,
+                      navigate,
+                      toast
+                    )
+                  }
+                >
+                  <span>Post Requirements</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={logout}>
-                  <LogOut className="h-4 w-4 mr-2" />
-                  <span>Logout</span>
+                <DropdownMenuItem
+                  onClick={() =>
+                    handleButtonClick(
+                      "/bid-now",
+                      "place bids",
+                      isAuthenticated,
+                      navigate,
+                      toast
+                    )
+                  }
+                >
+                  <span>Bid Now</span>
                 </DropdownMenuItem>
+                {isAuthenticated ? (
+                  <>
+                    <DropdownMenuItem onClick={() => navigate("/my-profile")}>
+                      <User className="h-4 w-4 mr-2" />
+                      <span>My Profile</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={logout}>
+                      <LogOut className="h-4 w-4 mr-2" />
+                      <span>Logout</span>
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <>
+                    <DropdownMenuItem onClick={() => navigate("/login")}>
+                      <span>Login</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/register")}>
+                      <span>Register</span>
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
-          ) : (
-            <div className="flex space-x-2">
-              <Link to="/login">
-                <Button className="bg-primary rounded-r-none">Login</Button>
-              </Link>
-              <Link to="/register">
-                <Button
-                  variant="outline"
-                  className="dark:text-white rounded-l-none border-l-0"
-                >
-                  Register
-                </Button>
-              </Link>
-            </div>
-          )}
+          </div>
+
+          <ThemeToggle />
         </div>
       </div>
 
