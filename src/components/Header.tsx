@@ -17,7 +17,6 @@ import { Search, ChevronDown, User, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import {
-  handleButtonClick,
   handleSearch,
   handleSearchInputChange,
   handleSuggestionClick,
