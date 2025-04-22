@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -23,6 +23,7 @@ import { MovingBanner } from "@/components/MovingBanner";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { mockProductSellersProfile } from "@/data/mockData";
+import Header from "@/components/Header";
 
 // Extend seller type with additional profile information
 interface SellerProfile {
@@ -159,20 +160,25 @@ const SellerProfile = () => {
   }
 
   return (
+    <>
+    <Header
+        isAuthenticated={false}
+        user={undefined}
+        logout={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+        searchQuery={""}
+        setSearchQuery={function (value: SetStateAction<string>): void {
+          throw new Error("Function not implemented.");
+        }}
+        suggestions={[]}
+        showSuggestions={false}
+        setShowSuggestions={function (value: SetStateAction<boolean>): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
     <div className="min-h-screen flex flex-col dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-3">
-          <Link to="/" className="flex items-center">
-            <img
-              src="/lovable-uploads/c2c0e920-a554-4d65-8e05-10b2d47db13e.png"
-              alt="National Trade Fair"
-              className="h-10 md:h-12 dark:invert"
-            />
-          </Link>
-        </div>
-      </header>
-
+      
       {/* Moving Banner */}
       <MovingBanner />
 
@@ -492,6 +498,7 @@ const SellerProfile = () => {
         <Footer />
       </div>
     </div>
+    </>
   );
 };
 

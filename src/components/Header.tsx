@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { useNavigate } from "react-router-dom";
+import { Route, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { sellers } from "@/data/mockData";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -77,7 +77,9 @@ const Header = ({ isAuthenticated, user, logout }: HeaderProps) => {
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <Logo />
+          <Link to="/">
+            <Logo />
+          </Link>
         </div>
 
         {/* Desktop Search */}
