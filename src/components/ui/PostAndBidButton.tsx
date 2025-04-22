@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "./button";
 import { handleButtonClick } from "@/handlerFunctions/indexPageHandlerFunctions";
-import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "./use-toast";
@@ -11,7 +10,7 @@ const PostAndBidButton = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   return (
-    <div className="hidden md:flex space-x-2">
+    <div className="flex space-x-2">
       <Button
         variant="outline"
         size="sm"
@@ -31,7 +30,7 @@ const PostAndBidButton = () => {
       <Button
         variant="outline"
         size="sm"
-        className="lg:inline-flex dark:text-white dark:hover:bg-gray-700"
+        className="dark:text-white dark:hover:bg-gray-700"
         onClick={() =>
           handleButtonClick(
             "/bid-now",
