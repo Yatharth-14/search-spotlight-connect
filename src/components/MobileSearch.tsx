@@ -36,7 +36,7 @@ export const MobileSearch = ({
   navigate,
 }: MobileSearchProps) => {
   return (
-    <div className="md:hidden px-4 pb-3 relative">
+    <div className="hidden px-4 pb-3 relative">
       <form
         onSubmit={(e) =>
           handleSearch(e, searchQuery, setShowSuggestions, navigate)

@@ -88,7 +88,7 @@ const Header = ({ isAuthenticated, user, logout }: HeaderProps) => {
           onSubmit={(e) =>
             handleSearch(e, searchQuery, setShowSuggestions, navigate)
           }
-          className="hidden md:flex flex-1 max-w-md mx-4 relative"
+          className="md:flex  flex-1 max-w-md mx-4 relative"
         >
           <Input
             type="text"
@@ -258,7 +258,8 @@ const Header = ({ isAuthenticated, user, logout }: HeaderProps) => {
       </div>
 
       {/* Mobile Search */}
-      <MobileSearch
+      <div className="">
+        <MobileSearch
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         suggestions={suggestions}
@@ -266,6 +267,8 @@ const Header = ({ isAuthenticated, user, logout }: HeaderProps) => {
         setShowSuggestions={setShowSuggestions}
         navigate={navigate}
       />
+      </div>
+      
     </header>
   );
 };
