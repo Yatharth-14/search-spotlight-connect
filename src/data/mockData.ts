@@ -1,5 +1,6 @@
 // Mock data for the entire application
-
+import product1 from "../assets/images/4k tv.jpg"
+import product2 from "../assets/images/headphones.jpg"
 // MovingBanner Offers data
 export const defaultOffers = [
   "🔥 Big Summer Sale — Up to 70% OFF!",
@@ -43,8 +44,6 @@ export const cards = [
     image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", // Fashion (women’s clothing)
   },
 ];
-
-
 
 // Categories
 export const categories = [
@@ -363,6 +362,90 @@ export const mockProductSellersProfile = [
     name: "Smart Office Bundle",
     price: "$599",
     category: "Office Equipment",
+    image: "https://via.placeholder.com/150",
+  },
+];
+
+// Mock data for the product page
+export const mockProducts = [
+  {
+    id: 1,
+    name: "4K Ultra HD Smart TV",
+    price: "$999",
+    category: "Electronics",
+    description: "Experience stunning visuals with this 4K Ultra HD Smart TV, featuring HDR and built-in streaming apps.",
+    image: product1,
+  },
+  {
+    id: 2,
+    name: "Wireless Noise-Cancelling Headphones",
+    price: "$299",
+    category: "Audio",
+    description: "Immerse yourself in music with these wireless noise-cancelling headphones, offering superior sound quality.",
+    image: product2,
+  },
+  {
+    id: 3,
+    name: "Gaming Laptop",
+    price: "$1499",
+    category: "Computers",
+    description: "High-performance gaming laptop with a powerful GPU, fast processor, and RGB keyboard.",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    id: 4,
+    name: "Smartphone Pro Max",
+    price: "$1199",
+    category: "Mobile Phones",
+    description: "The latest smartphone with a stunning display, advanced camera system, and long-lasting battery.",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    id: 5,
+    name: "Fitness Tracker",
+    price: "$199",
+    category: "Wearables",
+    description: "Track your fitness goals with this sleek and lightweight fitness tracker, featuring heart rate monitoring.",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    id: 6,
+    name: "Smart Home Security Camera",
+    price: "$149",
+    category: "Smart Home",
+    description: "Keep your home safe with this smart security camera, offering motion detection and night vision.",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    id: 7,
+    name: "Electric Scooter",
+    price: "$799",
+    category: "Transportation",
+    description: "Eco-friendly electric scooter with a long-range battery and foldable design for easy storage.",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    id: 8,
+    name: "Professional DSLR Camera",
+    price: "$2499",
+    category: "Photography",
+    description: "Capture stunning photos and videos with this professional DSLR camera, featuring a high-resolution sensor.",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    id: 9,
+    name: "Portable Bluetooth Speaker",
+    price: "$99",
+    category: "Audio",
+    description: "Compact and portable Bluetooth speaker with powerful sound and long battery life.",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    id: 10,
+    name: "Ergonomic Office Chair",
+    price: "$399",
+    category: "Furniture",
+    description: "Stay comfortable during long work hours with this ergonomic office chair, featuring lumbar support.",
     image: "https://via.placeholder.com/150",
   },
 ];

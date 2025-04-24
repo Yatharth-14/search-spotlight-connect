@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { cards } from "@/data/mockData";
+import ProductPage from "@/pages/ProductPage";
+import { Link } from "react-router-dom";
 
 export const HeroCarousel = () => {
   return (
@@ -20,9 +22,10 @@ export const HeroCarousel = () => {
           </div>
           <div className="mt-6">
             <p className="text-yellow-300 text-lg">{cards[0].price}</p>
-            <Button className="mt-4 bg-white text-black hover:bg-black hover:text-white">
+            <Link to="/productPage"><Button  className="mt-4 bg-white text-black hover:bg-black hover:text-white">
               CLICK HERE
-            </Button>
+            </Button></Link>
+            
           </div>
         </motion.div>
 
