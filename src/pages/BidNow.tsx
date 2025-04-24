@@ -32,10 +32,22 @@ interface Bid {
 }
 
 const BidNow = () => {
+  interface Seller {
+    id: number;
+    name: string;
+    image: string;
+    badge: string;
+  }
+
   const navigate = useNavigate();
   const { theme } = useTheme();
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
   const { toast } = useToast();
+
+  // Search State for Header
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<Seller[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   // Form state
   const [itemName, setItemName] = useState("");
@@ -115,20 +127,14 @@ const BidNow = () => {
   return (
     <>
       <Header
-        isAuthenticated={false}
-        user={undefined}
-        logout={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-        searchQuery={""}
-        setSearchQuery={function (value: SetStateAction<string>): void {
-          throw new Error("Function not implemented.");
-        }}
-        suggestions={[]}
-        showSuggestions={false}
-        setShowSuggestions={function (value: SetStateAction<boolean>): void {
-          throw new Error("Function not implemented.");
-        }}
+        isAuthenticated={isAuthenticated}
+        user={user}
+        logout={logout}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        suggestions={suggestions}
+        showSuggestions={showSuggestions}
+        setShowSuggestions={setShowSuggestions}
       />
       <div className="min-h-screen flex flex-col dark:bg-gray-900">
         {/* Main Content */}

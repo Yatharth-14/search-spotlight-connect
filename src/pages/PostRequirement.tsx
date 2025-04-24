@@ -1,8 +1,8 @@
 import { SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ThemeToggle";
+
 import { useTheme } from "next-themes";
 import { useAuth } from "@/hooks/useAuth";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,13 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/Header";
+
+interface Seller {
+  id: number;
+  name: string;
+  image: string;
+  badge: string;
+}
 
 // Define the requirement interface
 interface Requirement {
@@ -33,9 +40,13 @@ interface Requirement {
 
 const PostRequirement = () => {
   const navigate = useNavigate();
-  const { theme } = useTheme();
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
   const { toast } = useToast();
+
+  // Search State for Header
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<Seller[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   // Form state
   const [title, setTitle] = useState("");
@@ -109,20 +120,14 @@ const PostRequirement = () => {
   return (
     <>
       <Header
-        isAuthenticated={false}
-        user={undefined}
-        logout={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-        searchQuery={""}
-        setSearchQuery={function (value: SetStateAction<string>): void {
-          throw new Error("Function not implemented.");
-        }}
-        suggestions={[]}
-        showSuggestions={false}
-        setShowSuggestions={function (value: SetStateAction<boolean>): void {
-          throw new Error("Function not implemented.");
-        }}
+        isAuthenticated={isAuthenticated}
+        user={user}
+        logout={logout}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        suggestions={suggestions}
+        showSuggestions={showSuggestions}
+        setShowSuggestions={setShowSuggestions}
       />
       <div className="min-h-screen flex flex-col dark:bg-gray-900">
         {/* Main Content */}
