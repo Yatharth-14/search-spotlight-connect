@@ -1,6 +1,10 @@
 // Mock data for the entire application
 import product1 from "../assets/images/4k tv.jpg"
 import product2 from "../assets/images/headphones.jpg"
+import product3 from "../assets/images/GAMING LAP.jpg"
+import product4 from "../assets/images/smartphoneProMax.jpg"
+import product5 from "../assets/images/fitnessTracker.jpg"
+import product6 from "../assets/images/camera.jpg"
 // MovingBanner Offers data
 export const defaultOffers = [
   "🔥 Big Summer Sale — Up to 70% OFF!",
@@ -390,7 +394,7 @@ export const mockProducts = [
     price: "$1499",
     category: "Computers",
     description: "High-performance gaming laptop with a powerful GPU, fast processor, and RGB keyboard.",
-    image: "https://via.placeholder.com/150",
+    image: product3,
   },
   {
     id: 4,
@@ -398,7 +402,7 @@ export const mockProducts = [
     price: "$1199",
     category: "Mobile Phones",
     description: "The latest smartphone with a stunning display, advanced camera system, and long-lasting battery.",
-    image: "https://via.placeholder.com/150",
+    image: product4,
   },
   {
     id: 5,
@@ -406,7 +410,7 @@ export const mockProducts = [
     price: "$199",
     category: "Wearables",
     description: "Track your fitness goals with this sleek and lightweight fitness tracker, featuring heart rate monitoring.",
-    image: "https://via.placeholder.com/150",
+    image: product5,
   },
   {
     id: 6,
@@ -414,7 +418,7 @@ export const mockProducts = [
     price: "$149",
     category: "Smart Home",
     description: "Keep your home safe with this smart security camera, offering motion detection and night vision.",
-    image: "https://via.placeholder.com/150",
+    image: product6,
   },
   {
     id: 7,
