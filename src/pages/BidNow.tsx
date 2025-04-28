@@ -126,16 +126,7 @@ const BidNow = () => {
 
   return (
     <>
-      <Header
-        isAuthenticated={isAuthenticated}
-        user={user}
-        logout={logout}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        suggestions={suggestions}
-        showSuggestions={showSuggestions}
-        setShowSuggestions={setShowSuggestions}
-      />
+      
       <div className="min-h-screen flex flex-col dark:bg-gray-900">
         {/* Main Content */}
         <main className="flex-1 container mx-auto py-8 px-4">

@@ -13,22 +13,6 @@ const Register = () => {
 
   return (
     <>
-      <Header
-        isAuthenticated={false}
-        user={undefined}
-        logout={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-        searchQuery={""}
-        setSearchQuery={function (value: SetStateAction<string>): void {
-          throw new Error("Function not implemented.");
-        }}
-        suggestions={[]}
-        showSuggestions={false}
-        setShowSuggestions={function (value: SetStateAction<boolean>): void {
-          throw new Error("Function not implemented.");
-        }}
-      />
       <div className="min-h-screen flex flex-col dark:bg-gray-900">
         {/* Main Content */}
         <main className="flex-1 flex items-center justify-center p-4">

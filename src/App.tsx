@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,7 +15,7 @@ import BidNow from "./pages/BidNow";
 import MyProfile from "./pages/MyProfile";
 import SearchResults from "./pages/SearchResults";
 import SellerProfile from "./pages/SellerProfile";
-import ProductPage from "./pages/ProductPage";
+import Layout from "./components/Layout";
 
 const App = () => {
   // Create a client instance that persists across renders
@@ -31,17 +30,21 @@ const App = () => {
             <Sonner />
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/post-requirement" element={<PostRequirement />} />
-                <Route path="/bid-now" element={<BidNow />} />
-                <Route path="/my-profile" element={<MyProfile />} />
-                <Route path="/search" element={<SearchResults />} />
-                <Route path="/seller/:sellerId" element={<SellerProfile />} />
-                <Route path="/productPage" element={<ProductPage />} /> 
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
+                <Route element={<Layout />}>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route
+                    path="/post-requirement"
+                    element={<PostRequirement />}
+                  />
+                  <Route path="/bid-now" element={<BidNow />} />
+                  <Route path="/my-profile" element={<MyProfile />} />
+                  <Route path="/search" element={<SearchResults />} />
+                  <Route path="/seller/:sellerId" element={<SellerProfile />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Route>
               </Routes>
             </BrowserRouter>
           </TooltipProvider>

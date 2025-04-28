@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Route, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { sellers } from "@/data/mockData";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -13,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Menu, User, LogOut } from "lucide-react"; // Added Menu icon for hamburger
+import { Search, Menu, User, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import {
@@ -25,7 +23,6 @@ import { Logo } from "./Logo";
 import PostAndBidButton from "./ui/PostAndBidButton";
 import { MobileSearch } from "./MobileSearch";
 import { handleButtonClick } from "@/handlerFunctions/indexPageHandlerFunctions";
-import { useAuth } from "@/hooks/useAuth";
 
 // Define the Seller type
 interface Seller {
@@ -52,26 +49,19 @@ interface HeaderProps {
   setShowSuggestions: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Header = ({ isAuthenticated, user, logout }: HeaderProps) => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [suggestions, setSuggestions] = useState<Seller[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
+const Header = ({
+  isAuthenticated,
+  user,
+  logout,
+  searchQuery,
+  setSearchQuery,
+  suggestions,
+  showSuggestions,
+  setShowSuggestions,
+}: HeaderProps) => {
   const { theme } = useTheme();
   const navigate = useNavigate();
   const { toast } = useToast();
-
-  useEffect(() => {
-    if (searchQuery.trim()) {
-      const filtered = sellers.filter((seller) =>
-        seller.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setSuggestions(filtered.slice(0, 5));
-      setShowSuggestions(true);
-    } else {
-      setSuggestions([]);
-      setShowSuggestions(false);
-    }
-  }, [searchQuery]);
 
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
@@ -88,7 +78,7 @@ const Header = ({ isAuthenticated, user, logout }: HeaderProps) => {
           onSubmit={(e) =>
             handleSearch(e, searchQuery, setShowSuggestions, navigate)
           }
-          className="md:flex  flex-1 max-w-md mx-4 relative"
+          className="md:flex flex-1 max-w-md mx-4 relative"
         >
           <Input
             type="text"
@@ -260,15 +250,14 @@ const Header = ({ isAuthenticated, user, logout }: HeaderProps) => {
       {/* Mobile Search */}
       <div className="">
         <MobileSearch
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        suggestions={suggestions}
-        showSuggestions={showSuggestions}
-        setShowSuggestions={setShowSuggestions}
-        navigate={navigate}
-      />
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          suggestions={suggestions}
+          showSuggestions={showSuggestions}
+          setShowSuggestions={setShowSuggestions}
+          navigate={navigate}
+        />
       </div>
-      
     </header>
   );
 };

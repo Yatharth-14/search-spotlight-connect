@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { cards } from "@/data/mockData";
-import ProductPage from "@/pages/ProductPage";
-import { Link } from "react-router-dom";
 
 export const HeroCarousel = () => {
   return (
@@ -22,10 +20,9 @@ export const HeroCarousel = () => {
           </div>
           <div className="mt-6">
             <p className="text-yellow-300 text-lg">{cards[0].price}</p>
-            <Link to="/productPage"><Button  className="mt-4 bg-white text-black hover:bg-black hover:text-white">
+            <Button className="mt-4 bg-white text-black hover:bg-black hover:text-white">
               CLICK HERE
-            </Button></Link>
-            
+            </Button>
           </div>
         </motion.div>
 
@@ -37,7 +34,7 @@ export const HeroCarousel = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 * idx }}
-              style={{backgroundImage: `url(${offer.image})`}}
+              style={{ backgroundImage: `url(${offer.image})` }}
               className="rounded-lg p-6 shadow-md text-center bg-cover bg-center relative rounded-none"
             >
               <h2 className="text-green-200 text-sm font-bold uppercase mb-1">
@@ -61,7 +58,7 @@ export const HeroCarousel = () => {
               key={idx}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              style={{backgroundImage: `url(${offer.image})`}}
+              style={{ backgroundImage: `url(${offer.image})` }}
               transition={{ duration: 0.5, delay: 0.1 * (idx + 2) }}
               className="rounded-lg p-6 shadow-md text-center bg-cover bg-center relative rounded-none"
             >
