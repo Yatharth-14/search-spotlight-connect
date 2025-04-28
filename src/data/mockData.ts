@@ -5,6 +5,8 @@ import product3 from "../assets/images/GAMING LAP.jpg"
 import product4 from "../assets/images/smartphoneProMax.jpg"
 import product5 from "../assets/images/fitnessTracker.jpg"
 import product6 from "../assets/images/camera.jpg"
+import product7 from "../assets/images/electricScooter.jpeg"
+import product8 from "../assets/images/dslrCamera.jpeg"
 // MovingBanner Offers data
 export const defaultOffers = [
   "🔥 Big Summer Sale — Up to 70% OFF!",
@@ -426,7 +428,7 @@ export const mockProducts = [
     price: "$799",
     category: "Transportation",
     description: "Eco-friendly electric scooter with a long-range battery and foldable design for easy storage.",
-    image: "https://via.placeholder.com/150",
+    image: product7,
   },
   {
     id: 8,
@@ -434,7 +436,7 @@ export const mockProducts = [
     price: "$2499",
     category: "Photography",
     description: "Capture stunning photos and videos with this professional DSLR camera, featuring a high-resolution sensor.",
-    image: "https://via.placeholder.com/150",
+    image: product8,
   },
   {
     id: 9,

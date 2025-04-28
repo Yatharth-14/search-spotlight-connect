@@ -48,13 +48,25 @@ const Header = ({
     <header className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Logo />
-        <DesktopSearch
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          suggestions={suggestions}
-          showSuggestions={showSuggestions}
-          setShowSuggestions={setShowSuggestions}
-        />
+        <div className="hidden md:block">
+          <DesktopSearch
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            suggestions={suggestions}
+            showSuggestions={showSuggestions}
+            setShowSuggestions={setShowSuggestions}
+          />
+        </div>
+        <div className="block md:hidden">
+          <MobileSearch
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            suggestions={suggestions}
+            showSuggestions={showSuggestions}
+            setShowSuggestions={setShowSuggestions}
+            navigate={useNavigate()}
+          />
+        </div>
         <div className="flex items-center space-x-2">
           <AuthButtons
             isAuthenticated={isAuthenticated}
@@ -69,14 +81,6 @@ const Header = ({
           <ThemeToggle />
         </div>
       </div>
-      <MobileSearch
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        suggestions={suggestions}
-        showSuggestions={showSuggestions}
-        setShowSuggestions={setShowSuggestions}
-        navigate={useNavigate()}
-      />
     </header>
   );
 };

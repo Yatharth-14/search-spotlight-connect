@@ -36,7 +36,7 @@ export const MobileSearch = ({
   navigate,
 }: MobileSearchProps) => {
   return (
-    <div className="hidden px-4 pb-3 relative">
+    <div className="md:hidden px-4 pb-3 relative">
       <form
         onSubmit={(e) =>
           handleSearch(e, searchQuery, setShowSuggestions, navigate)
@@ -46,14 +46,14 @@ export const MobileSearch = ({
         <Input
           type="text"
           placeholder="Search products, suppliers..."
-          className="w-full pl-10 dark:bg-gray-700 dark:text-white"
+          className="w-full pl-10 mt-3 dark:bg-gray-700 dark:text-white"
           value={searchQuery}
           onChange={(e) => handleSearchInputChange(e, setSearchQuery)}
         />
         <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
 
         {showSuggestions && suggestions.length > 0 && (
-          <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-10 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
+          <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-1 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
             <ul className="py-1">
               {suggestions.map((seller) => (
                 <li

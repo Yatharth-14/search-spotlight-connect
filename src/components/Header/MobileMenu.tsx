@@ -33,9 +33,10 @@ const MobileMenu = ({ isAuthenticated, user, logout }: MobileMenuProps) => {
             <Menu className="h-5 w-5" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent
+
+          <DropdownMenuContent
           align="end"
-          className="bg-white dark:bg-gray-800 w-48"
+          className="bg-white dark:bg-gray-800 w-480 md:hidden"
         >
           <DropdownMenuItem
             onClick={() =>
@@ -48,7 +49,7 @@ const MobileMenu = ({ isAuthenticated, user, logout }: MobileMenuProps) => {
               )
             }
           >
-            <span>Post Requirements</span>
+            <span className="cursor-pointer">Post Requirements</span>
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
@@ -61,30 +62,32 @@ const MobileMenu = ({ isAuthenticated, user, logout }: MobileMenuProps) => {
               )
             }
           >
-            <span>Bid Now</span>
+            <span className="cursor-pointer">Bid Now</span>
           </DropdownMenuItem>
           {isAuthenticated ? (
             <>
               <DropdownMenuItem onClick={() => navigate("/my-profile")}>
                 <User className="h-4 w-4 mr-2" />
-                <span>My Profile</span>
+                <span className="cursor-pointer">My Profile</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={logout}>
                 <LogOut className="h-4 w-4 mr-2" />
-                <span>Logout</span>
+                <span className="cursor-pointer">Logout</span>
               </DropdownMenuItem>
             </>
           ) : (
             <>
               <DropdownMenuItem onClick={() => navigate("/login")}>
-                <span>Login</span>
+                <span className="cursor-pointer">Login</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => navigate("/register")}>
-                <span>Register</span>
+                <span className="cursor-pointer">Register</span>
               </DropdownMenuItem>
             </>
           )}
         </DropdownMenuContent>
+
+        
       </DropdownMenu>
     </div>
   );

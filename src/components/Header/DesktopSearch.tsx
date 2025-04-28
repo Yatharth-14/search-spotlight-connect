@@ -37,7 +37,7 @@ const DesktopSearch = ({
   return (
     <form
       onSubmit={(e) => handleSearch(e, searchQuery, setShowSuggestions, navigate)}
-      className="md:flex flex-1 max-w-md mx-4 relative"
+      className="hidden md:flex md:block flex-1 max-w-md mx-4 relative"
     >
       <Input
         type="text"
@@ -49,7 +49,7 @@ const DesktopSearch = ({
       <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
 
       {showSuggestions && suggestions.length > 0 && (
-        <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-10 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
+        <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-11 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
           <ul className="py-1">
             {suggestions.map((seller) => (
               <li
