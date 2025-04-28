@@ -1,28 +1,11 @@
 import { useTheme } from "next-themes";
-import { useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search, Menu, User, LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import {
-  handleSearch,
-  handleSearchInputChange,
-  handleSuggestionClick,
-} from "@/handlerFunctions/indexPageHandlerFunctions";
-import { Logo } from "./Logo";
-import PostAndBidButton from "./ui/PostAndBidButton";
+import { Logo } from "./Header/Logo";
+import DesktopSearch from "./Header/DesktopSearch";
+import MobileMenu from "./Header/MobileMenu";
+import AuthButtons from "./Header/AuthButtons";
 import { MobileSearch } from "./MobileSearch";
-import { handleButtonClick } from "@/handlerFunctions/indexPageHandlerFunctions";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { useNavigate } from "react-router-dom";
 
 // Define the Seller type
 interface Seller {
@@ -60,204 +43,40 @@ const Header = ({
   setShowSuggestions,
 }: HeaderProps) => {
   const { theme } = useTheme();
-  const navigate = useNavigate();
-  const { toast } = useToast();
 
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        {/* Logo */}
-        <div className="flex items-center">
-          <Link to="/">
-            <Logo />
-          </Link>
-        </div>
-
-        {/* Desktop Search */}
-        <form
-          onSubmit={(e) =>
-            handleSearch(e, searchQuery, setShowSuggestions, navigate)
-          }
-          className="md:flex flex-1 max-w-md mx-4 relative"
-        >
-          <Input
-            type="text"
-            placeholder="Search products, suppliers..."
-            className="w-full pl-10 dark:bg-gray-700 dark:text-white"
-            value={searchQuery}
-            onChange={(e) => handleSearchInputChange(e, setSearchQuery)}
-          />
-          <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-
-          {showSuggestions && suggestions.length > 0 && (
-            <div className="absolute z-50 bg-white dark:bg-gray-800 w-full mt-10 rounded-md shadow-lg border dark:border-gray-700 max-h-60 overflow-y-auto">
-              <ul className="py-1">
-                {suggestions.map((seller) => (
-                  <li
-                    key={seller.id}
-                    className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center"
-                    onClick={() =>
-                      handleSuggestionClick(
-                        seller.id,
-                        setShowSuggestions,
-                        navigate
-                      )
-                    }
-                  >
-                    <Avatar className="w-8 h-8 mr-2">
-                      <AvatarImage src={seller.image} />
-                      <AvatarFallback>
-                        {seller.name.substring(0, 2)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="dark:text-white font-medium">
-                        {seller.name}
-                      </p>
-                      <Badge
-                        variant="secondary"
-                        className="text-xs dark:bg-gray-700"
-                      >
-                        {seller.badge}
-                      </Badge>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </form>
-
-        {/* Right Buttons */}
-        <div className="flex items-center space-x-2">
-          {/* Desktop Buttons */}
-          <div className="hidden md:flex items-center space-x-2">
-            <PostAndBidButton />
-            {isAuthenticated ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex items-center dark:text-white"
-                  >
-                    <User className="h-4 w-4 mr-1" />
-                    <span className="hidden sm:inline">{user?.name}</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="end"
-                  className="bg-white dark:bg-gray-800 w-48"
-                >
-                  <DropdownMenuItem onClick={() => navigate("/my-profile")}>
-                    <User className="h-4 w-4 mr-2" />
-                    <span>My Profile</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={logout}>
-                    <LogOut className="h-4 w-4 mr-2" />
-                    <span>Logout</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <div className="flex space-x-2">
-                <Link to="/login">
-                  <Button className="bg-primary rounded-r-none">Login</Button>
-                </Link>
-                <Link to="/register">
-                  <Button
-                    variant="outline"
-                    className="dark:text-white rounded-l-none border-l-0"
-                  >
-                    Register
-                  </Button>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Hamburger Menu for Mobile */}
-          <div className="md:hidden">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="dark:text-white"
-                >
-                  <Menu className="h-5 w-5" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="bg-white dark:bg-gray-800 w-48"
-              >
-                <DropdownMenuItem
-                  onClick={() =>
-                    handleButtonClick(
-                      "/post-requirement",
-                      "post requirements",
-                      isAuthenticated,
-                      navigate,
-                      toast
-                    )
-                  }
-                >
-                  <span>Post Requirements</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() =>
-                    handleButtonClick(
-                      "/bid-now",
-                      "place bids",
-                      isAuthenticated,
-                      navigate,
-                      toast
-                    )
-                  }
-                >
-                  <span>Bid Now</span>
-                </DropdownMenuItem>
-                {isAuthenticated ? (
-                  <>
-                    <DropdownMenuItem onClick={() => navigate("/my-profile")}>
-                      <User className="h-4 w-4 mr-2" />
-                      <span>My Profile</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={logout}>
-                      <LogOut className="h-4 w-4 mr-2" />
-                      <span>Logout</span>
-                    </DropdownMenuItem>
-                  </>
-                ) : (
-                  <>
-                    <DropdownMenuItem onClick={() => navigate("/login")}>
-                      <span>Login</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/register")}>
-                      <span>Register</span>
-                    </DropdownMenuItem>
-                  </>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          <ThemeToggle />
-        </div>
-      </div>
-
-      {/* Mobile Search */}
-      <div className="">
-        <MobileSearch
+        <Logo />
+        <DesktopSearch
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           suggestions={suggestions}
           showSuggestions={showSuggestions}
           setShowSuggestions={setShowSuggestions}
-          navigate={navigate}
         />
+        <div className="flex items-center space-x-2">
+          <AuthButtons
+            isAuthenticated={isAuthenticated}
+            user={user}
+            logout={logout}
+          />
+          <MobileMenu
+            isAuthenticated={isAuthenticated}
+            user={user}
+            logout={logout}
+          />
+          <ThemeToggle />
+        </div>
       </div>
+      <MobileSearch
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        suggestions={suggestions}
+        showSuggestions={showSuggestions}
+        setShowSuggestions={setShowSuggestions}
+        navigate={useNavigate()}
+      />
     </header>
   );
 };
