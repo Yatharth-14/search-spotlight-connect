@@ -9,8 +9,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Menu, User, LogOut } from "lucide-react";
 import { handleButtonClick } from "@/handlerFunctions/indexPageHandlerFunctions";
+import { useEffect, useState } from "react";
 
-// Define the User type
 interface User {
   name: string;
 }
@@ -24,70 +24,115 @@ interface MobileMenuProps {
 const MobileMenu = ({ isAuthenticated, user, logout }: MobileMenuProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Close dropdown when screen size crosses md breakpoint
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsOpen(false); // Close dropdown on md and above
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial check
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div className="md:hidden">
-      <DropdownMenu>
+      <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="sm" className="dark:text-white">
+          <Button
+            variant="outline"
+            size="sm"
+            className="dark:text-white cursor-pointer"
+            aria-label="Open mobile menu"
+          >
             <Menu className="h-5 w-5" />
           </Button>
         </DropdownMenuTrigger>
-
-          <DropdownMenuContent
+        <DropdownMenuContent
           align="end"
-          className="bg-white dark:bg-gray-800 w-480 md:hidden"
+          className="bg-white dark:bg-gray-800 w-48"
         >
           <DropdownMenuItem
-            onClick={() =>
+            onClick={() => {
               handleButtonClick(
                 "/post-requirement",
                 "post requirements",
                 isAuthenticated,
                 navigate,
                 toast
-              )
-            }
+              );
+              setIsOpen(false);
+            }}
+            className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
           >
-            <span className="cursor-pointer">Post Requirements</span>
+            <span>Post Requirements</span>
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() =>
+            onClick={() => {
               handleButtonClick(
                 "/bid-now",
                 "place bids",
                 isAuthenticated,
                 navigate,
                 toast
-              )
-            }
+              );
+              setIsOpen(false);
+            }}
+            className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
           >
-            <span className="cursor-pointer">Bid Now</span>
+            <span>Bid Now</span>
           </DropdownMenuItem>
           {isAuthenticated ? (
             <>
-              <DropdownMenuItem onClick={() => navigate("/my-profile")}>
+              <DropdownMenuItem
+                onClick={() => {
+                  navigate("/my-profile");
+                  setIsOpen(false);
+                }}
+                className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
                 <User className="h-4 w-4 mr-2" />
-                <span className="cursor-pointer">My Profile</span>
+                <span>My Profile</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={logout}>
+              <DropdownMenuItem
+                onClick={() => {
+                  logout();
+                  setIsOpen(false);
+                }}
+                className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
                 <LogOut className="h-4 w-4 mr-2" />
-                <span className="cursor-pointer">Logout</span>
+                <span>Logout</span>
               </DropdownMenuItem>
             </>
           ) : (
             <>
-              <DropdownMenuItem onClick={() => navigate("/login")}>
-                <span className="cursor-pointer">Login</span>
+              <DropdownMenuItem
+                onClick={() => {
+                  navigate("/login");
+                  setIsOpen(false);
+                }}
+                className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                <span>Login</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => navigate("/register")}>
-                <span className="cursor-pointer">Register</span>
+              <DropdownMenuItem
+                onClick={() => {
+                  navigate("/register");
+                  setIsOpen(false);
+                }}
+                className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                <span>Register</span>
               </DropdownMenuItem>
             </>
           )}
         </DropdownMenuContent>
-
-        
       </DropdownMenu>
     </div>
   );
