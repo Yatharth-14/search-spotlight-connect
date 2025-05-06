@@ -16,15 +16,24 @@ interface Product {
 }
 
 const CategoryPage = () => {
-  const { categoryId } = useParams();
+  const { categoryName } = useParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [category, setCategory] = useState<string | null>(null);
   const [view, setView] = useState<"grid" | "list">("grid");
 
-  // Find the category by ID
+  // Find the category by name
   useEffect(() => {
-    if (categoryId) {
-      const categoryObj = categories.find((cat) => cat.id.toString() === categoryId);
+    if (categoryName) {
+      // Normalize the category name (replace hyphens with spaces and capitalize properly)
+      const normalizedName = categoryName
+        .split("-")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(" ");
+      
+      const categoryObj = categories.find(
+        (cat) => cat.name.toLowerCase() === normalizedName.toLowerCase()
+      );
+      
       if (categoryObj) {
         setCategory(categoryObj.name);
         
@@ -35,7 +44,7 @@ const CategoryPage = () => {
         setProducts(filteredProducts);
       }
     }
-  }, [categoryId]);
+  }, [categoryName]);
 
   return (
     <div className="container mx-auto px-4 py-8 dark:bg-gray-900">

@@ -12,8 +12,10 @@ export const CategorySection = () => {
     category.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   
-  const handleCategoryClick = (categoryId: number) => {
-    navigate(`/category/${categoryId}`);
+  const handleCategoryClick = (categoryName: string) => {
+    // Convert category name to URL-friendly format (lowercase, spaces to hyphens)
+    const formattedCategoryName = categoryName.toLowerCase().replace(/\s+/g, '-');
+    navigate(`/category/${formattedCategoryName}`);
   };
 
   return (
@@ -30,7 +32,7 @@ export const CategorySection = () => {
               <div key={category.id} className="flex-shrink-0">
                 <div 
                   className={`px-4 py-2 rounded-full text-white ${category.color} hover:scale-105 transition-transform cursor-pointer`}
-                  onClick={() => handleCategoryClick(category.id)}
+                  onClick={() => handleCategoryClick(category.name)}
                 >
                   {category.name}
                 </div>
@@ -55,7 +57,7 @@ export const CategorySection = () => {
               <div 
                 key={category.id} 
                 className={`p-4 rounded-lg text-white ${category.color} text-center cursor-pointer hover:opacity-90 transition-opacity`}
-                onClick={() => handleCategoryClick(category.id)}
+                onClick={() => handleCategoryClick(category.name)}
               >
                 {category.name}
               </div>
@@ -70,12 +72,7 @@ export const CategorySection = () => {
               <div 
                 key={product.id} 
                 className="bg-white dark:bg-gray-700 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-                onClick={() => {
-                  const categoryObj = categories.find(cat => cat.name === product.category);
-                  if (categoryObj) {
-                    handleCategoryClick(categoryObj.id);
-                  }
-                }}
+                onClick={() => handleCategoryClick(product.category)}
               >
                 <div className="w-full h-40 bg-gray-200 dark:bg-gray-600 rounded-md mb-4"></div>
                 <h4 className="font-medium dark:text-white">{product.title}</h4>
