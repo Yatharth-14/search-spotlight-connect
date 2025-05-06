@@ -1,20 +1,24 @@
+
 import React from "react";
 import { Button } from "./button";
 import { handleButtonClick } from "@/handlerFunctions/indexPageHandlerFunctions";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "./use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const PostAndBidButton = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const isMobile = useIsMobile();
+  
   return (
-    <div className="flex space-x-2">
+    <div className="flex space-x-1 sm:space-x-2">
       <Button
         variant="outline"
-        size="sm"
-        className="dark:text-white dark:hover:bg-gray-700"
+        size={isMobile ? "sm" : "sm"}
+        className="dark:text-white dark:hover:bg-gray-700 text-xs sm:text-sm px-2 sm:px-3"
         onClick={() =>
           handleButtonClick(
             "/post-requirement",
@@ -25,12 +29,12 @@ const PostAndBidButton = () => {
           )
         }
       >
-        Post Requirements
+        {isMobile ? "Post" : "Post Requirements"}
       </Button>
       <Button
         variant="outline"
-        size="sm"
-        className="dark:text-white dark:hover:bg-gray-700"
+        size={isMobile ? "sm" : "sm"}
+        className="dark:text-white dark:hover:bg-gray-700 text-xs sm:text-sm px-2 sm:px-3"
         onClick={() =>
           handleButtonClick(
             "/bid-now",
@@ -41,7 +45,7 @@ const PostAndBidButton = () => {
           )
         }
       >
-        Bid Now
+        {isMobile ? "Bid" : "Bid Now"}
       </Button>
     </div>
   );

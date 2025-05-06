@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User, LogOut } from "lucide-react";
 import PostAndBidButton from "../ui/PostAndBidButton";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Define the User type
 interface User {
@@ -23,9 +25,10 @@ interface AuthButtonsProps {
 
 const AuthButtons = ({ isAuthenticated, user, logout }: AuthButtonsProps) => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   return (
-    <div className="hidden md:flex items-center space-x-2">
+    <div className="hidden md:flex items-center space-x-1 sm:space-x-2">
       <PostAndBidButton />
       {isAuthenticated ? (
         <DropdownMenu>
@@ -54,16 +57,19 @@ const AuthButtons = ({ isAuthenticated, user, logout }: AuthButtonsProps) => {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <div className="flex space-x-2">
+        <div className="flex">
           <Link to="/login">
-            <Button className="bg-primary rounded-r-none">Login</Button>
+            <Button size="sm" className="bg-primary rounded-r-none px-2 sm:px-4">
+              {isMobile ? "Log" : "Login"}
+            </Button>
           </Link>
           <Link to="/register">
             <Button
               variant="outline"
-              className="dark:text-white rounded-l-none border-l-0"
+              size="sm"
+              className="dark:text-white rounded-l-none border-l-0 px-2 sm:px-4"
             >
-              Register
+              {isMobile ? "Reg" : "Register"}
             </Button>
           </Link>
         </div>

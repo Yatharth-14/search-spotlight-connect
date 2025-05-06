@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
@@ -37,12 +38,12 @@ const DesktopSearch = ({
   return (
     <form
       onSubmit={(e) => handleSearch(e, searchQuery, setShowSuggestions, navigate)}
-      className="hidden md:flex md:block flex-1 max-w-lg mx-4 relative"
+      className="relative w-full"
     >
       <Input
         type="text"
         placeholder="Search products, suppliers..."
-        className="w-[32rem] pl-10 dark:bg-gray-700 dark:text-white"
+        className="w-full pl-10 dark:bg-gray-700 dark:text-white"
         value={searchQuery}
         onChange={(e) => handleSearchInputChange(e, setSearchQuery)}
       />

@@ -1,3 +1,4 @@
+
 import { useTheme } from "next-themes";
 import { Logo } from "./Header/Logo";
 import DesktopSearch from "./Header/DesktopSearch";
@@ -46,9 +47,9 @@ const Header = ({
 
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="container mx-auto px-2 sm:px-4 py-3 flex items-center justify-between">
         <Logo />
-        <div className="hidden md:block">
+        <div className="hidden md:block flex-1 max-w-lg mx-2">
           <DesktopSearch
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -57,7 +58,7 @@ const Header = ({
             setShowSuggestions={setShowSuggestions}
           />
         </div>
-        <div className="block md:hidden">
+        <div className="block md:hidden w-full mx-2">
           <MobileSearch
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -67,7 +68,7 @@ const Header = ({
             navigate={useNavigate()}
           />
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
           <AuthButtons
             isAuthenticated={isAuthenticated}
             user={user}
