@@ -13,6 +13,12 @@ export function ThemeToggle() {
     setMounted(true);
   }, []);
 
+  // Force the theme toggle to work correctly every time
+  const toggleTheme = () => {
+    const currentTheme = theme === "dark" ? "light" : "dark";
+    setTheme(currentTheme);
+  };
+
   if (!mounted) {
     return null;
   }
@@ -21,7 +27,7 @@ export function ThemeToggle() {
     <Button
       variant="outline"
       size="icon"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      onClick={toggleTheme}
       aria-label="Toggle theme"
     >
       {theme === "dark" ? (
