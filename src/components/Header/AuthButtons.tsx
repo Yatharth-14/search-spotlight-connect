@@ -60,7 +60,7 @@ const AuthButtons = ({ isAuthenticated, user, logout }: AuthButtonsProps) => {
         <div className="flex">
           <Link to="/login">
             <Button size="sm" className="bg-primary rounded-r-none px-2 sm:px-4">
-              {isMobile ? "Log" : "Login"}
+              Login
             </Button>
           </Link>
           <Link to="/register">
@@ -69,7 +69,7 @@ const AuthButtons = ({ isAuthenticated, user, logout }: AuthButtonsProps) => {
               size="sm"
               className="dark:text-white rounded-l-none border-l-0 px-2 sm:px-4"
             >
-              {isMobile ? "Reg" : "Register"}
+              Register
             </Button>
           </Link>
         </div>
