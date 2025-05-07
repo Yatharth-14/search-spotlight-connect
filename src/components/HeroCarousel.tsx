@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import axios from "axios";
@@ -32,10 +33,10 @@ export const HeroCarousel = () => {
     return <div>Loading...</div>;
   }
 
-  console.log("Cards:",cards);
+  console.log("Cards:", cards);
 
   return (
-    <div className="w-full py-2 px-2 sm:px-4 lg:px-2 ">
+    <div className="w-full py-2 px-2 sm:px-4 lg:px-2">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
         {/* Card 1: Big Featured Card (takes 2 cols and 2 rows) */}
         <motion.div
@@ -47,16 +48,18 @@ export const HeroCarousel = () => {
         >
           <>{(console.log("Card 1 imgURL:", cards[0].imgURL), null)}</>
           
-          <div>
-            <h1 className="text-4xl font-bold mb-2">{cards[0].title}</h1>
-            <p className="text-xl">{cards[0].desc}</p>
+          <div className="z-10">
+            <h1 className="text-2xl sm:text-4xl font-bold mb-2">{cards[0].title}</h1>
+            <p className="text-base sm:text-xl">{cards[0].desc}</p>
           </div>
-          <div className="mt-6">
-            <p className="text-yellow-300 text-lg">{cards[0].couponCode}</p>
+          <div className="mt-6 z-10">
+            <p className="text-yellow-300 text-sm sm:text-lg">{cards[0].couponCode}</p>
             <Button className="mt-4 bg-white text-black hover:bg-black hover:text-white">
               CLICK HERE
             </Button>
           </div>
+          {/* Add overlay to improve text readability */}
+          <div className="absolute inset-0 bg-black bg-opacity-30"></div>
         </motion.div>
 
         {/* Column: Card 2 and 3 */}
@@ -68,16 +71,20 @@ export const HeroCarousel = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 * idx }}
               style={{ backgroundImage: `url(${offer.imgURL})` }}
-              className="rounded-lg p-6 shadow-md text-center bg-cover bg-center relative rounded-none"
+              className="rounded-lg p-4 sm:p-6 shadow-md text-center bg-cover bg-center relative rounded-none"
             >
-              <h2 className="text-green-200 text-sm font-bold uppercase mb-1">
-                {offer.title}
-              </h2>
-              <p className="text-white font-semibold text-base">{offer.desc}</p>
-              <p className="text-yellow-300 text-sm my-2">{offer.couponCode}</p>
-              <Button className="mt-2 bg-black text-white hover:bg-white hover:text-black">
-                CLICK HERE
-              </Button>
+              <div className="relative z-10">
+                <h2 className="text-green-200 text-xs sm:text-sm font-bold uppercase mb-1">
+                  {offer.title}
+                </h2>
+                <p className="text-white font-semibold text-sm sm:text-base">{offer.desc}</p>
+                <p className="text-yellow-300 text-xs sm:text-sm my-2">{offer.couponCode}</p>
+                <Button className="mt-2 bg-black text-white hover:bg-white hover:text-black text-xs sm:text-sm">
+                  CLICK HERE
+                </Button>
+              </div>
+              {/* Add overlay to improve text readability */}
+              <div className="absolute inset-0 bg-black bg-opacity-30"></div>
             </motion.div>
           ))}
         </div>
@@ -91,16 +98,20 @@ export const HeroCarousel = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 * (idx + 2) }}
               style={{ backgroundImage: `url(${offer.imgURL})` }}
-              className="rounded-lg p-6 shadow-md text-center bg-cover bg-center relative rounded-none"
+              className="rounded-lg p-4 sm:p-6 shadow-md text-center bg-cover bg-center relative rounded-none"
             >
-              <h2 className="text-green-200 text-sm font-bold uppercase mb-1">
-                {offer.title}
-              </h2>
-              <p className="text-white font-semibold text-base">{offer.desc}</p>
-              <p className="text-yellow-300 text-sm my-2">{offer.couponCode}</p>
-              <Button className="mt-2 bg-black text-white hover:bg-white hover:text-black">
-                CLICK HERE
-              </Button>
+              <div className="relative z-10">
+                <h2 className="text-green-200 text-xs sm:text-sm font-bold uppercase mb-1">
+                  {offer.title}
+                </h2>
+                <p className="text-white font-semibold text-sm sm:text-base">{offer.desc}</p>
+                <p className="text-yellow-300 text-xs sm:text-sm my-2">{offer.couponCode}</p>
+                <Button className="mt-2 bg-black text-white hover:bg-white hover:text-black text-xs sm:text-sm">
+                  CLICK HERE
+                </Button>
+              </div>
+              {/* Add overlay to improve text readability */}
+              <div className="absolute inset-0 bg-black bg-opacity-30"></div>
             </motion.div>
           ))}
         </div>

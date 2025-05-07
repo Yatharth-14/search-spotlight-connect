@@ -1,3 +1,4 @@
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,19 +34,6 @@ export const DropDownMenu = () => {
             align="end"
             className="bg-white dark:bg-gray-800 w-48"
           >
-            <DropdownMenuItem
-              onClick={() =>
-                handleButtonClick(
-                  "/post-requirement",
-                  "post requirements",
-                  isAuthenticated,
-                  navigate,
-                  toast
-                )
-              }
-            >
-              Post Requirements
-            </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() =>
                 handleButtonClick(

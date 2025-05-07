@@ -9,8 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Filter, SlidersHorizontal } from "lucide-react";
+import { Filter } from "lucide-react";
 
 interface Product {
   id: number;
@@ -34,30 +33,67 @@ const CategoryPage = () => {
   // Find the category by name
   useEffect(() => {
     if (categoryName) {
+      console.log("Category Name from URL:", categoryName);
+      
       // Normalize the category name (replace hyphens with spaces and capitalize properly)
       const normalizedName = categoryName
         .split("-")
         .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
         .join(" ");
       
+      console.log("Normalized Category Name:", normalizedName);
+      
+      // Match with categories from mockData, checking for case-insensitive match
       const categoryObj = categories.find(
-        (cat) => cat.name.toLowerCase() === normalizedName.toLowerCase()
+        cat => cat.name.toLowerCase() === normalizedName.toLowerCase()
       );
+      
+      console.log("Found category:", categoryObj);
       
       if (categoryObj) {
         setCategory(categoryObj.name);
         
+        // Get all products regardless of category first (for debugging)
+        console.log("All available products:", mockProducts);
+        
         // Filter products by category
         const filteredProducts = mockProducts.filter(
-          (product) => product.category === categoryObj.name
+          product => product.category.toLowerCase() === categoryObj.name.toLowerCase()
         );
         
-        setAllProducts(filteredProducts);
-        setProducts(filteredProducts);
+        console.log("Filtered products for category:", filteredProducts);
+        
+        // If no exact match, try to find products that contain the category name
+        if (filteredProducts.length === 0) {
+          const looselyFilteredProducts = mockProducts.filter(
+            product => product.category.toLowerCase().includes(categoryObj.name.toLowerCase()) ||
+                      categoryObj.name.toLowerCase().includes(product.category.toLowerCase())
+          );
+          
+          console.log("Loosely filtered products:", looselyFilteredProducts);
+          setAllProducts(looselyFilteredProducts);
+          setProducts(looselyFilteredProducts);
+        } else {
+          setAllProducts(filteredProducts);
+          setProducts(filteredProducts);
+        }
+        
+        // If still no products, just display all products for now
+        if (filteredProducts.length === 0) {
+          console.log("No products found, showing all products");
+          setAllProducts(mockProducts);
+          setProducts(mockProducts);
+        }
         
         // Reset filters when changing categories
         setSortBy("default");
         setPriceRange([0, 1000]);
+      } else {
+        // If no matching category found, show all products
+        console.log("No matching category found, showing all products");
+        setCategory("All Products");
+        setAllProducts(mockProducts);
+        setProducts(mockProducts);
       }
     }
   }, [categoryName]);
@@ -106,7 +142,7 @@ const CategoryPage = () => {
     <div className="container mx-auto px-4 py-8 dark:bg-gray-900">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <h1 className="text-3xl font-bold dark:text-white">
-          {category || "Category"} Products
+          {category || "Products"} 
         </h1>
         <div className="flex flex-wrap gap-2 items-center">
           <Button 

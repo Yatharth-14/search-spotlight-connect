@@ -21,22 +21,6 @@ const PostAndBidButton = () => {
         className="dark:text-white dark:hover:bg-gray-700 text-xs sm:text-sm px-2 sm:px-3"
         onClick={() =>
           handleButtonClick(
-            "/post-requirement",
-            "post requirements",
-            isAuthenticated,
-            navigate,
-            toast
-          )
-        }
-      >
-        {isMobile ? "Post" : "Post Requirements"}
-      </Button>
-      <Button
-        variant="outline"
-        size={isMobile ? "sm" : "sm"}
-        className="dark:text-white dark:hover:bg-gray-700 text-xs sm:text-sm px-2 sm:px-3"
-        onClick={() =>
-          handleButtonClick(
             "/bid-now",
             "place bids",
             isAuthenticated,

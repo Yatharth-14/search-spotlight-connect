@@ -11,7 +11,6 @@ import { AuthProvider } from "./hooks/useAuth";
 import { useState } from "react";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import PostRequirement from "./pages/PostRequirement";
 import BidNow from "./pages/BidNow";
 import MyProfile from "./pages/MyProfile";
 import SearchResults from "./pages/SearchResults";
@@ -36,10 +35,6 @@ const App = () => {
                   <Route path="/" element={<Index />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
-                  <Route
-                    path="/post-requirement"
-                    element={<PostRequirement />}
-                  />
                   <Route path="/bid-now" element={<BidNow />} />
                   <Route path="/my-profile" element={<MyProfile />} />
                   <Route path="/search" element={<SearchResults />} />

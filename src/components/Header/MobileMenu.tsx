@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -57,21 +58,6 @@ const MobileMenu = ({ isAuthenticated, user, logout }: MobileMenuProps) => {
           align="end"
           className="bg-white dark:bg-gray-800 w-48"
         >
-          <DropdownMenuItem
-            onClick={() => {
-              handleButtonClick(
-                "/post-requirement",
-                "post requirements",
-                isAuthenticated,
-                navigate,
-                toast
-              );
-              setIsOpen(false);
-            }}
-            className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
-          >
-            <span>Post Requirements</span>
-          </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
               handleButtonClick(
