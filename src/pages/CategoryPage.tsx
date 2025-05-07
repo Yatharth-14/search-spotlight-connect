@@ -139,15 +139,15 @@ const CategoryPage = () => {
   }, [sortBy, priceRange, allProducts]);
 
   return (
-    <div className="container mx-auto px-4 py-8 dark:bg-gray-900">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-        <h1 className="text-3xl font-bold dark:text-white">
+    <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8 dark:bg-gray-900">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 sm:mb-8 gap-2 sm:gap-4">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold dark:text-white">
           {category || "Products"} 
         </h1>
-        <div className="flex flex-wrap gap-2 items-center">
+        <div className="flex flex-wrap gap-2 items-center w-full md:w-auto">
           <Button 
             variant="outline" 
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 text-xs sm:text-sm"
             onClick={() => setShowFilters(!showFilters)}
           >
             <Filter size={16} />
@@ -155,7 +155,7 @@ const CategoryPage = () => {
           </Button>
           
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[120px] sm:w-[180px] text-xs sm:text-sm">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
@@ -167,11 +167,11 @@ const CategoryPage = () => {
             </SelectContent>
           </Select>
           
-          <div className="ml-2">
+          <div className="ml-auto md:ml-2">
             <Tabs value={view} onValueChange={(value) => setView(value as "grid" | "list")}>
               <TabsList>
-                <TabsTrigger value="grid">Grid</TabsTrigger>
-                <TabsTrigger value="list">List</TabsTrigger>
+                <TabsTrigger value="grid" className="text-xs sm:text-sm">Grid</TabsTrigger>
+                <TabsTrigger value="list" className="text-xs sm:text-sm">List</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
@@ -179,10 +179,10 @@ const CategoryPage = () => {
       </div>
       
       {showFilters && (
-        <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-gray-50 dark:bg-gray-800 p-2 sm:p-4 rounded-lg mb-4 sm:mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <div>
-              <h3 className="font-medium mb-3 dark:text-white">Price Range</h3>
+              <h3 className="font-medium mb-2 sm:mb-3 dark:text-white text-sm sm:text-base">Price Range</h3>
               <Slider 
                 defaultValue={[0, 1000]} 
                 max={1000} 
@@ -191,51 +191,51 @@ const CategoryPage = () => {
                 onValueChange={(value) => setPriceRange(value as [number, number])}
                 className="mb-2"
               />
-              <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+              <div className="flex justify-between text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                 <span>${priceRange[0]}</span>
                 <span>${priceRange[1]}</span>
               </div>
             </div>
             
             <div>
-              <h3 className="font-medium mb-3 dark:text-white">Availability</h3>
+              <h3 className="font-medium mb-2 sm:mb-3 dark:text-white text-sm sm:text-base">Availability</h3>
               <RadioGroup defaultValue="all">
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="all" id="all" />
-                  <label htmlFor="all" className="text-sm dark:text-gray-300">All</label>
+                  <label htmlFor="all" className="text-xs sm:text-sm dark:text-gray-300">All</label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="in-stock" id="in-stock" />
-                  <label htmlFor="in-stock" className="text-sm dark:text-gray-300">In Stock</label>
+                  <label htmlFor="in-stock" className="text-xs sm:text-sm dark:text-gray-300">In Stock</label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="out-of-stock" id="out-of-stock" />
-                  <label htmlFor="out-of-stock" className="text-sm dark:text-gray-300">Out of Stock</label>
+                  <label htmlFor="out-of-stock" className="text-xs sm:text-sm dark:text-gray-300">Out of Stock</label>
                 </div>
               </RadioGroup>
             </div>
             
             <div>
-              <h3 className="font-medium mb-3 dark:text-white">Rating</h3>
+              <h3 className="font-medium mb-2 sm:mb-3 dark:text-white text-sm sm:text-base">Rating</h3>
               <RadioGroup defaultValue="any">
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="any" id="any-rating" />
-                  <label htmlFor="any-rating" className="text-sm dark:text-gray-300">Any Rating</label>
+                  <label htmlFor="any-rating" className="text-xs sm:text-sm dark:text-gray-300">Any Rating</label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="4stars" id="4stars" />
-                  <label htmlFor="4stars" className="text-sm dark:text-gray-300">4★ & Above</label>
+                  <label htmlFor="4stars" className="text-xs sm:text-sm dark:text-gray-300">4★ & Above</label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="3stars" id="3stars" />
-                  <label htmlFor="3stars" className="text-sm dark:text-gray-300">3★ & Above</label>
+                  <label htmlFor="3stars" className="text-xs sm:text-sm dark:text-gray-300">3★ & Above</label>
                 </div>
               </RadioGroup>
             </div>
             
             <div className="flex flex-col justify-end">
-              <Button variant="outline" className="mb-2">Apply Filters</Button>
-              <Button variant="ghost" onClick={() => {
+              <Button variant="outline" className="mb-2 text-xs sm:text-sm">Apply Filters</Button>
+              <Button variant="ghost" className="text-xs sm:text-sm" onClick={() => {
                 setPriceRange([0, 1000]);
                 setSortBy("default");
               }}>Reset All</Button>
@@ -245,16 +245,16 @@ const CategoryPage = () => {
       )}
 
       {products.length === 0 ? (
-        <div className="text-center py-12">
-          <h2 className="text-xl font-semibold dark:text-white">No products found in this category</h2>
-          <p className="text-gray-500 dark:text-gray-400 mt-2">
+        <div className="text-center py-8 sm:py-12">
+          <h2 className="text-lg sm:text-xl font-semibold dark:text-white">No products found in this category</h2>
+          <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">
             Try browsing other categories or adjusting your filters
           </p>
         </div>
       ) : (
         <Tabs value={view} className="w-full">
           <TabsContent value="grid" className="mt-0">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 sm:gap-4 lg:gap-6">
               {products.map((product) => (
                 <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                   <div className="aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden">
@@ -270,17 +270,17 @@ const CategoryPage = () => {
                       </div>
                     )}
                   </div>
-                  <CardHeader className="p-4 pb-2">
-                    <CardTitle className="text-lg">{product.name}</CardTitle>
+                  <CardHeader className="p-2 sm:p-4 pb-0 sm:pb-2">
+                    <CardTitle className="text-sm sm:text-lg line-clamp-2">{product.name}</CardTitle>
                   </CardHeader>
-                  <CardContent className="p-4 pt-0">
-                    <div className="flex justify-between items-center mb-2">
-                      <Badge variant="secondary" className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                  <CardContent className="p-2 sm:p-4 pt-0">
+                    <div className="flex justify-between items-center mb-1 sm:mb-2">
+                      <Badge variant="secondary" className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs truncate max-w-[120px]">
                         {product.category}
                       </Badge>
-                      <span className="font-semibold">{product.price}</span>
+                      <span className="font-semibold text-sm sm:text-base">{product.price}</span>
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
                       {product.description}
                     </p>
                   </CardContent>
@@ -290,7 +290,7 @@ const CategoryPage = () => {
           </TabsContent>
 
           <TabsContent value="list" className="mt-0">
-            <div className="space-y-4">
+            <div className="space-y-2 sm:space-y-4">
               {products.map((product) => (
                 <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                   <div className="md:flex">
@@ -299,23 +299,23 @@ const CategoryPage = () => {
                         <img 
                           src={product.image} 
                           alt={product.name} 
-                          className="w-full h-48 md:h-full object-cover"
+                          className="w-full h-32 sm:h-48 md:h-full object-cover"
                         />
                       ) : (
-                        <div className="w-full h-48 md:h-full flex items-center justify-center text-gray-400">
+                        <div className="w-full h-32 sm:h-48 md:h-full flex items-center justify-center text-gray-400">
                           No image
                         </div>
                       )}
                     </div>
-                    <div className="md:w-3/4 p-6">
-                      <h3 className="text-xl font-semibold mb-2 dark:text-white">{product.name}</h3>
-                      <div className="flex justify-between items-center mb-4">
-                        <Badge variant="secondary" className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                    <div className="md:w-3/4 p-2 sm:p-4 md:p-6">
+                      <h3 className="text-base sm:text-lg md:text-xl font-semibold mb-1 sm:mb-2 dark:text-white">{product.name}</h3>
+                      <div className="flex justify-between items-center mb-2 sm:mb-4">
+                        <Badge variant="secondary" className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs">
                           {product.category}
                         </Badge>
-                        <span className="font-semibold">{product.price}</span>
+                        <span className="font-semibold text-sm sm:text-base">{product.price}</span>
                       </div>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-300">
                         {product.description}
                       </p>
                     </div>

@@ -4,11 +4,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { handleButtonClick } from "@/handlerFunctions/indexPageHandlerFunctions";
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "./use-toast";
 import { ChevronDown } from "lucide-react";

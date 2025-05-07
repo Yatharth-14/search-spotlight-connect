@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { defaultOffers } from "@/data/mockData";
@@ -20,8 +21,10 @@ export const MovingBanner = () => {
 
   // Start auto animation when component mounts
   useEffect(() => {
-    startAnimation();
-  }, [offers]);
+    if (!isPaused) {
+      startAnimation();
+    }
+  }, [offers, isPaused]);
 
   const startAnimation = () => {
     controls.start({

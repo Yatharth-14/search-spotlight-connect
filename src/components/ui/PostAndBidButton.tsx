@@ -29,7 +29,7 @@ const PostAndBidButton = () => {
           )
         }
       >
-        {isMobile ? "Bid" : "Bid Now"}
+        Bid Now
       </Button>
     </div>
   );
