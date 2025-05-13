@@ -7,14 +7,22 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import axios, { all } from "axios";
+
+interface LoginFormData {
+  email: string;
+  password: string;
+}
 
 export const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [formData, setFormData] = useState<LoginFormData>({
+      email: "",
+      password: "",
+    });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,8 +30,16 @@ export const LoginForm = () => {
 
     try {
       // Use the login function from auth context
-      await login(email, password);
-      
+      // await login(email, password);
+      const allUsers = await axios.get("http://localhost:5161/api/Users")
+      console.log(allUsers.data);
+      const user = (allUsers).data.find(
+        (user: any) => user.email === formData.email && user.password === formData.password
+      );
+      if (!user) {
+        throw new Error("Invalid email or password");
+      }
+
       toast({
         title: "Login Successful",
         description: "Welcome to National Trade Fair!",
@@ -51,8 +67,8 @@ export const LoginForm = () => {
           id="email"
           type="email"
           placeholder="Your email address"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           required
         />
       </div>
@@ -67,8 +83,8 @@ export const LoginForm = () => {
           id="password"
           type="password"
           placeholder="Your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData.password}
+          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
           required
         />
       </div>

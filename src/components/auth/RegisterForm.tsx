@@ -15,9 +15,6 @@ interface RegisterFormData {
 }
 
 export const RegisterForm = () => {
-  const [username, setusername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
@@ -35,10 +32,7 @@ export const RegisterForm = () => {
     console.log("Form Data:", formData);
     try {
       // Replace with your actual backend API endpoint
-      const response = await axios.post(
-        "http://localhost:5161/api/Users",
-        formData
-      );
+      await axios.post("http://localhost:5161/api/Users", formData);
       toast({
         title: "Success",
         description: "Registration successful! Redirecting...",
@@ -67,7 +61,9 @@ export const RegisterForm = () => {
           type="text"
           placeholder="Your full name"
           value={formData.username}
-          onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, username: e.target.value })
+          }
           required
         />
       </div>
@@ -89,7 +85,9 @@ export const RegisterForm = () => {
           type="password"
           placeholder="Create a password"
           value={formData.password}
-          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
           required
         />
       </div>
