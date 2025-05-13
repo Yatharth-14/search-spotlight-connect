@@ -9,20 +9,20 @@ import { useAuth } from "@/hooks/useAuth";
 import axios from "axios";
 
 interface RegisterFormData {
-  fullName: string;
+  username: string;
   email: string;
   password: string;
 }
 
 export const RegisterForm = () => {
-  const [fullName, setfullName] = useState("");
+  const [username, setusername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const [formData, setFormData] = useState<RegisterFormData>({
-    fullName: "",
+    username: "",
     email: "",
     password: "",
   });
@@ -63,11 +63,11 @@ export const RegisterForm = () => {
       <div className="space-y-2">
         <Label htmlFor="name">Full Name</Label>
         <Input
-          id="fullName"
+          id="username"
           type="text"
           placeholder="Your full name"
-          value={formData.fullName}
-          onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+          value={formData.username}
+          onChange={(e) => setFormData({ ...formData, username: e.target.value })}
           required
         />
       </div>
