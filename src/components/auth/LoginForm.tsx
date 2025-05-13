@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import axios, { all } from "axios";
+import axios from "axios";
 
 interface LoginFormData {
   email: string;
@@ -29,17 +29,15 @@ export const LoginForm = () => {
     setLoading(true);
 
     try {
-      // Use the login function from auth context
-      // await login(email, password);
-      const allUsers = await axios.get("http://localhost:5161/api/Users")
-      console.log(allUsers.data);
-      const user = (allUsers).data.find(
-        (user: any) => user.email === formData.email && user.password === formData.password
-      );
-      if (!user) {
-        throw new Error("Invalid email or password");
-      }
-
+      // Call the API endpoint for login
+      const response = await axios.post("http://localhost:5161/api/auth/login", {
+        email: formData.email,
+        password: formData.password
+      });
+      
+      // Use the login function from auth context with the returned data
+      await login(formData.email, formData.password);
+      
       toast({
         title: "Login Successful",
         description: "Welcome to National Trade Fair!",
@@ -49,6 +47,7 @@ export const LoginForm = () => {
       // Navigate to home page after successful login
       navigate("/");
     } catch (error) {
+      console.error("Login error:", error);
       toast({
         title: "Login Failed",
         description: error instanceof Error ? error.message : "Invalid credentials",

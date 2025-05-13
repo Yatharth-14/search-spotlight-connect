@@ -1,3 +1,4 @@
+
 import {
   useEffect,
   useState,
@@ -5,6 +6,7 @@ import {
   useContext,
   ReactNode,
 } from "react";
+import axios from "axios";
 
 interface User {
   email: string;
@@ -51,56 +53,58 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    // Check if user exists in localStorage
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const user = users.find((u: any) => u.email === email);
-    console.log("User:   ", users);
-    if (!user) {
-      throw new Error("User not found. Please register first.");
+    try {
+      // Make API request to login
+      const response = await axios.post("http://localhost:5161/api/auth/login", {
+        email,
+        password,
+      });
+      
+      // Extract user data from response
+      const userData: User = {
+        email: response.data.email,
+        name: response.data.name,
+        role: response.data.role || "member",
+      };
+
+      // Still store in localStorage for session persistence
+      localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      setIsAuthenticated(true);
+      setUser(userData);
+    } catch (error) {
+      console.error("Login error:", error);
+      throw error;
     }
-
-    if (user.password !== password) {
-      throw new Error("Invalid password");
-    }
-
-    const userData: User = {
-      email: user.email,
-      name: user.name,
-      role: "member",
-    };
-
-    localStorage.setItem("isAuthenticated", "true");
-    localStorage.setItem("user", JSON.stringify(userData));
-
-    setIsAuthenticated(true);
-    setUser(userData);
   };
 
   const register = async (name: string, email: string, password: string) => {
-    // Check if email already exists
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    try {
+      // Make API request to register
+      const response = await axios.post("http://localhost:5161/api/auth/register", {
+        name,
+        email,
+        password,
+      });
+      
+      // Extract user data from response
+      const userData: User = {
+        email: response.data.email,
+        name: response.data.name,
+        role: response.data.role || "member",
+      };
 
-    if (users.some((user: any) => user.email === email)) {
-      throw new Error("Email already registered");
+      // Store in localStorage for session persistence
+      localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      setIsAuthenticated(true);
+      setUser(userData);
+    } catch (error) {
+      console.error("Registration error:", error);
+      throw error;
     }
-
-    // Add new user
-    const newUser = { name, email, password };
-    users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
-
-    // Auto login after registration
-    const userData: User = {
-      email,
-      name,
-      role: "member",
-    };
-
-    localStorage.setItem("isAuthenticated", "true");
-    localStorage.setItem("user", JSON.stringify(userData));
-
-    setIsAuthenticated(true);
-    setUser(userData);
   };
 
   const updateUser = (userData: Partial<User>) => {
