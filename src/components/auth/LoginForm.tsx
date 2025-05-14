@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,7 +7,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import axios from "axios";
 
 interface LoginFormData {
   email: string;
@@ -28,18 +28,9 @@ export const LoginForm = () => {
     setLoading(true);
 
     try {
-      // Call the API endpoint for login
-      const response = await axios.get("http://localhost:5161/api/Users");
-
-      console.log("Users: ", response.data);
-      const user = response.data.find(
-        (user: any) => user.email === formData.email
-      );
-
-      if (user.email !== formData.email) {
-        throw new Error("User not found");
-      }
-
+      // Use the login function from useAuth hook to authenticate with backend
+      await login(formData.email, formData.password);
+      
       toast({
         title: "Login Successful",
         description: "Welcome to National Trade Fair!",
