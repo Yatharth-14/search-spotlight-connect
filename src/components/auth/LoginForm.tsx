@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,9 +19,9 @@ export const LoginForm = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [formData, setFormData] = useState<LoginFormData>({
-      email: "",
-      password: "",
-    });
+    email: "",
+    password: "",
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,10 +31,12 @@ export const LoginForm = () => {
       // Call the API endpoint for login
       const response = await axios.get("http://localhost:5161/api/Users");
 
-      console.log(response.data);
-      const user = response.data.find((user: any) => user.email === formData.email);
-      
-      if(user.email !== formData.email) {
+      console.log("Users: ", response.data);
+      const user = response.data.find(
+        (user: any) => user.email === formData.email
+      );
+
+      if (user.email !== formData.email) {
         throw new Error("User not found");
       }
 
@@ -44,14 +45,15 @@ export const LoginForm = () => {
         description: "Welcome to National Trade Fair!",
         variant: "default",
       });
-      
+
       // Navigate to home page after successful login
       navigate("/");
     } catch (error) {
       console.error("Login error:", error);
       toast({
         title: "Login Failed",
-        description: error instanceof Error ? error.message : "Invalid credentials",
+        description:
+          error instanceof Error ? error.message : "Invalid credentials",
         variant: "destructive",
       });
     } finally {
@@ -75,7 +77,11 @@ export const LoginForm = () => {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <Label htmlFor="password">Password</Label>
-          <Button type="button" variant="link" className="p-0 h-auto font-normal text-xs">
+          <Button
+            type="button"
+            variant="link"
+            className="p-0 h-auto font-normal text-xs"
+          >
             Forgot password?
           </Button>
         </div>
@@ -84,13 +90,17 @@ export const LoginForm = () => {
           type="password"
           placeholder="Your password"
           value={formData.password}
-          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
           required
         />
       </div>
       <div className="flex items-center space-x-2">
         <Checkbox id="remember" />
-        <Label htmlFor="remember" className="text-sm cursor-pointer">Remember me</Label>
+        <Label htmlFor="remember" className="text-sm cursor-pointer">
+          Remember me
+        </Label>
       </div>
       <Button type="submit" className="w-full" disabled={loading}>
         {loading ? "Logging in..." : "Login"}
@@ -103,7 +113,7 @@ export const LoginForm = () => {
           </Button>
         </Link>
       </div>
-      
+
       {/* Demo credentials */}
       <div className="text-xs text-center text-muted-foreground mt-4">
         <p>Register a new account to get started!</p>

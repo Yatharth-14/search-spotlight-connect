@@ -22,7 +22,7 @@ export const HeroCarousel = () => {
       try {
         setLoading(true);
         const response = await axios.get("http://localhost:5161/api/carouselcard");
-        console.log("Response data:", response.data);
+        console.log("Response data Hero Carousel:", response.data);
         setCards(response.data);
         setError(null);
       } catch (error) {
