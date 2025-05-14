@@ -30,14 +30,15 @@ export const LoginForm = () => {
 
     try {
       // Call the API endpoint for login
-      const response = await axios.post("http://localhost:5161/api/auth/login", {
-        email: formData.email,
-        password: formData.password
-      });
+      const response = await axios.get("http://localhost:5161/api/Users");
+
+      console.log(response.data);
+      const user = response.data.find((user: any) => user.email === formData.email);
       
-      // Use the login function from auth context with the returned data
-      await login(formData.email, formData.password);
-      
+      if(user.email !== formData.email) {
+        throw new Error("User not found");
+      }
+
       toast({
         title: "Login Successful",
         description: "Welcome to National Trade Fair!",
