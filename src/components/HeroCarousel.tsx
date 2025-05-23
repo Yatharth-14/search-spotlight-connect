@@ -21,7 +21,7 @@ export const HeroCarousel = () => {
     const fetchCards = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://localhost:5161/api/carouselcard");
+        const response = await axios.get("http://localhost:5000/api/carouselCardImages");
         console.log("Response data Hero Carousel:", response.data);
         setCards(response.data);
         setError(null);
@@ -126,7 +126,7 @@ export const HeroCarousel = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 * (idx + 2) }}
                 style={{ backgroundImage: `url(${offer.imgURL})` }}
-                className="rounded-lg p-4 sm:p-6 shadow-md text-center bg-cover bg-center relative rounded-none"
+                className="rounded-lg p-4 sm:p-6 shadow-md text-center bg-cover bg-center relative"
               >
                 <div className="relative z-10">
                   <h2 className="text-green-200 text-xs sm:text-sm font-bold uppercase mb-1">

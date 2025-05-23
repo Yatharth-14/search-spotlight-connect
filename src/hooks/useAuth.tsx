@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (email: string, password: string) => {
     try {
       // Make API request to login
-      const response = await axios.post("http://localhost:5161/api/auth/login", {
+      const response = await axios.post("http://localhost:5000/api/login", {
         email,
         password,
       });
@@ -82,7 +82,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const register = async (name: string, email: string, password: string) => {
     try {
       // Make API request to register
-      const response = await axios.post("http://localhost:5161/api/auth/register", {
+      const response = await axios.post("http://localhost:5000/api/register", {
         name,
         email,
         password,

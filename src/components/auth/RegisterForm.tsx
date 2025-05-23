@@ -32,7 +32,7 @@ export const RegisterForm = () => {
     console.log("Form Data:", formData);
     try {
       // Replace with your actual backend API endpoint
-      await axios.post("http://localhost:5161/api/Users", formData);
+      await axios.post("http://localhost:5000/api/register", formData);
       toast({
         title: "Success",
         description: "Registration successful! Redirecting...",
