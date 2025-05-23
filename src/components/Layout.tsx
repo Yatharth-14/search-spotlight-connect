@@ -1,5 +1,5 @@
+
 import React from "react";
-import useAuth from "@/hooks/useAuth";
 import Header from "./Header";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -13,7 +13,6 @@ interface Seller {
 }
 
 const Layout = () => {
-  const { isAuthenticated, user, logout } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState<Seller[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -40,9 +39,6 @@ const Layout = () => {
         suggestions={suggestions}
         showSuggestions={showSuggestions}
         setShowSuggestions={setShowSuggestions}
-        isAuthenticated={isAuthenticated}
-        user={user}
-        logout={logout}
       />
       <main>
         <Outlet />

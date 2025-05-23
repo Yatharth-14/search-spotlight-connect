@@ -11,21 +11,20 @@ import {
 import { User, LogOut } from "lucide-react";
 import PostAndBidButton from "../ui/PostAndBidButton";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { logout } from "@/store/slices/authSlice";
 
-// Define the User type
-interface User {
-  name: string;
-}
+interface AuthButtonsProps {}
 
-interface AuthButtonsProps {
-  isAuthenticated: boolean;
-  user: User | null;
-  logout: () => void;
-}
-
-const AuthButtons = ({ isAuthenticated, user, logout }: AuthButtonsProps) => {
+const AuthButtons = ({}: AuthButtonsProps) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const dispatch = useAppDispatch();
+  const { isAuthenticated, user } = useAppSelector(state => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <div className="hidden md:flex items-center space-x-1 sm:space-x-2">
@@ -50,7 +49,7 @@ const AuthButtons = ({ isAuthenticated, user, logout }: AuthButtonsProps) => {
               <User className="h-4 w-4 mr-2" />
               <span>My Profile</span>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={logout}>
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut className="h-4 w-4 mr-2" />
               <span>Logout</span>
             </DropdownMenuItem>

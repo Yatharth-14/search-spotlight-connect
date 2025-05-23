@@ -16,16 +16,8 @@ interface Seller {
   badge: string;
 }
 
-// Define the User type
-interface User {
-  name: string;
-}
-
 // Define the props interface
 interface HeaderProps {
-  isAuthenticated: boolean;
-  user: User | null;
-  logout: () => void;
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   suggestions: Seller[];
@@ -34,9 +26,6 @@ interface HeaderProps {
 }
 
 const Header = ({
-  isAuthenticated,
-  user,
-  logout,
   searchQuery,
   setSearchQuery,
   suggestions,
@@ -69,16 +58,8 @@ const Header = ({
           />
         </div>
         <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
-          <AuthButtons
-            isAuthenticated={isAuthenticated}
-            user={user}
-            logout={logout}
-          />
-          <MobileMenu
-            isAuthenticated={isAuthenticated}
-            user={user}
-            logout={logout}
-          />
+          <AuthButtons />
+          <MobileMenu />
           <ThemeToggle />
         </div>
       </div>

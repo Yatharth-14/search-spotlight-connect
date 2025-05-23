@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,38 +16,42 @@ import SearchResults from "./pages/SearchResults";
 import SellerProfile from "./pages/SellerProfile";
 import CategoryPage from "./pages/CategoryPage";
 import Layout from "./components/Layout";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 const App = () => {
   // Create a client instance that persists across renders
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <AuthProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                <Route element={<Layout />}>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/bid-now" element={<BidNow />} />
-                  <Route path="/my-profile" element={<MyProfile />} />
-                  <Route path="/search" element={<SearchResults />} />
-                  <Route path="/seller/:sellerId" element={<SellerProfile />} />
-                  <Route path="/category/:categoryName" element={<CategoryPage />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Route>
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </AuthProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <AuthProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <Routes>
+                  <Route element={<Layout />}>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/bid-now" element={<BidNow />} />
+                    <Route path="/my-profile" element={<MyProfile />} />
+                    <Route path="/search" element={<SearchResults />} />
+                    <Route path="/seller/:sellerId" element={<SellerProfile />} />
+                    <Route path="/category/:categoryName" element={<CategoryPage />} />
+                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                    <Route path="*" element={<NotFound />} />
+                  </Route>
+                </Routes>
+              </BrowserRouter>
+            </TooltipProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </Provider>
   );
 };
 

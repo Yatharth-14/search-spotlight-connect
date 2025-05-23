@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -5,8 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
-import axios from "axios";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { registerUser } from "@/store/slices/authSlice";
 
 interface RegisterFormData {
   username: string;
@@ -16,39 +17,56 @@ interface RegisterFormData {
 
 export const RegisterForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { loading } = useAppSelector(state => state.auth);
+  
   const [formData, setFormData] = useState<RegisterFormData>({
     username: "",
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
-  const { register } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    console.log("Form Data:", formData);
-    try {
-      // Replace with your actual backend API endpoint
-      await axios.post("http://localhost:5000/api/register", formData);
+    
+    if (formData.password !== confirmPassword) {
       toast({
-        title: "Success",
-        description: "Registration successful! Redirecting...",
+        title: "Error",
+        description: "Passwords do not match!",
+        variant: "destructive",
       });
-      // Navigate to login or home page after successful registration
-      setTimeout(() => navigate("/login"), 2000);
+      return;
+    }
+    
+    try {
+      const resultAction = await dispatch(registerUser({
+        name: formData.username,
+        email: formData.email,
+        password: formData.password
+      }));
+      
+      if (registerUser.fulfilled.match(resultAction)) {
+        toast({
+          title: "Success",
+          description: "Registration successful! Redirecting...",
+        });
+        // Navigate to login or home page after successful registration
+        setTimeout(() => navigate("/"), 2000);
+      } else if (registerUser.rejected.match(resultAction) && resultAction.payload) {
+        toast({
+          title: "Error",
+          description: resultAction.payload as string,
+          variant: "destructive",
+        });
+      }
     } catch (error: any) {
       toast({
         title: "Error",
-        description:
-          error.response?.data?.message ||
-          "Failed to register. Please try again.",
+        description: "Failed to register. Please try again.",
         variant: "destructive",
       });
-    } finally {
-      setLoading(false);
     }
   };
 

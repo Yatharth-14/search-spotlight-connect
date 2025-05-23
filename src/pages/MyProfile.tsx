@@ -1,9 +1,7 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { 
@@ -23,6 +21,8 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, User, Save, UserRound } from "lucide-react";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { updateUser } from "@/store/slices/authSlice";
 
 interface ProfileData {
   name: string;
@@ -39,9 +39,10 @@ interface ProfileData {
 }
 
 const MyProfile = () => {
-  const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const dispatch = useAppDispatch();
+  const { isAuthenticated, user } = useAppSelector(state => state.auth);
 
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState<ProfileData>({
@@ -102,27 +103,8 @@ const MyProfile = () => {
     // Save to localStorage
     localStorage.setItem(`profile_${user?.email}`, JSON.stringify(profileData));
     
-    // Update users array to ensure name is updated everywhere
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const updatedUsers = users.map((u: any) => {
-      if (u.email === user?.email) {
-        return {
-          ...u,
-          name: profileData.name
-        };
-      }
-      return u;
-    });
-    localStorage.setItem("users", JSON.stringify(updatedUsers));
-    
-    // Update current user in local storage
-    if (user) {
-      const updatedUser = {
-        ...user,
-        name: profileData.name
-      };
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-    }
+    // Update user in Redux (only name)
+    dispatch(updateUser({ name: profileData.name }));
     
     setIsEditing(false);
     toast({

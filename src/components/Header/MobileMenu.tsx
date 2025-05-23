@@ -11,21 +11,20 @@ import { Button } from "@/components/ui/button";
 import { Menu, User, LogOut } from "lucide-react";
 import { handleButtonClick } from "@/handlerFunctions/indexPageHandlerFunctions";
 import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { logout } from "@/store/slices/authSlice";
 
-interface User {
-  name: string;
-}
-
-interface MobileMenuProps {
-  isAuthenticated: boolean;
-  user: User | null;
-  logout: () => void;
-}
-
-const MobileMenu = ({ isAuthenticated, user, logout }: MobileMenuProps) => {
+const MobileMenu = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const { isAuthenticated, user } = useAppSelector(state => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    setIsOpen(false);
+  };
 
   // Close dropdown when screen size crosses md breakpoint
   useEffect(() => {
@@ -86,10 +85,7 @@ const MobileMenu = ({ isAuthenticated, user, logout }: MobileMenuProps) => {
                 <span>My Profile</span>
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => {
-                  logout();
-                  setIsOpen(false);
-                }}
+                onClick={handleLogout}
                 className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <LogOut className="h-4 w-4 mr-2" />

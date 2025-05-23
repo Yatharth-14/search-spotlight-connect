@@ -6,7 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { loginUser, clearError } from "@/store/slices/authSlice";
 
 interface LoginFormData {
   email: string;
@@ -14,10 +15,11 @@ interface LoginFormData {
 }
 
 export const LoginForm = () => {
-  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const dispatch = useAppDispatch();
+  const { loading, error } = useAppSelector(state => state.auth);
+  
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
@@ -25,30 +27,32 @@ export const LoginForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-
+    
     try {
-      // Use the login function from useAuth hook to authenticate with backend
-      await login(formData.email, formData.password);
+      // Dispatch the login action
+      const resultAction = await dispatch(loginUser({ 
+        email: formData.email, 
+        password: formData.password 
+      }));
       
-      toast({
-        title: "Login Successful",
-        description: "Welcome to National Trade Fair!",
-        variant: "default",
-      });
-
-      // Navigate to home page after successful login
-      navigate("/");
+      if (loginUser.fulfilled.match(resultAction)) {
+        toast({
+          title: "Login Successful",
+          description: "Welcome to National Trade Fair!",
+          variant: "default",
+        });
+        
+        // Navigate to home page after successful login
+        navigate("/");
+      } else if (loginUser.rejected.match(resultAction) && resultAction.payload) {
+        toast({
+          title: "Login Failed",
+          description: resultAction.payload as string,
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       console.error("Login error:", error);
-      toast({
-        title: "Login Failed",
-        description:
-          error instanceof Error ? error.message : "Invalid credentials",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
     }
   };
 
